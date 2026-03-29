@@ -1,0 +1,120 @@
+.bar {
+  position: relative;
+  z-index: var(--z-sticky);
+  width: 100%;
+  background:
+    linear-gradient(90deg, rgba(255, 255, 255, 0.04), transparent 18%, transparent 82%, rgba(255, 255, 255, 0.04)),
+    var(--color-black);
+  color: var(--color-white);
+  border-bottom: var(--border-dark);
+}
+
+.inner {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: center;
+  min-height: 42px;
+  padding: 0 var(--gutter);
+  gap: var(--space-4);
+}
+
+.viewport {
+  position: relative;
+  overflow: hidden;
+  min-width: 0;
+}
+
+.message {
+  margin: 0;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-3);
+  min-height: 42px;
+  font-size: var(--text-xs);
+  letter-spacing: var(--tracking-ultra);
+  line-height: 1;
+  text-transform: uppercase;
+  white-space: nowrap;
+  animation: fadeInUp var(--duration-normal) var(--ease-out);
+}
+
+.kicker {
+  color: rgba(255, 255, 255, 0.72);
+}
+
+.divider {
+  color: rgba(255, 255, 255, 0.45);
+}
+
+.closeButton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 44px;
+  min-height: 44px;
+  padding: 0;
+  color: rgba(255, 255, 255, 0.76);
+  font-size: 0.625rem;
+  letter-spacing: var(--tracking-ultra);
+  text-transform: uppercase;
+  transition:
+    color var(--duration-fast) var(--ease-out),
+    opacity var(--duration-fast) var(--ease-out);
+}
+
+.closeButton:hover {
+  color: var(--color-white);
+}
+
+@media (max-width: 768px) {
+  .inner {
+    grid-template-columns: 1fr;
+    justify-items: center;
+    padding: var(--space-2) var(--gutter);
+    gap: 0;
+  }
+
+  .viewport {
+    width: 100%;
+  }
+
+  .message {
+    justify-content: center;
+    white-space: normal;
+    text-align: center;
+    line-height: 1.4;
+  }
+
+  .closeButton {
+    position: absolute;
+    top: 50%;
+    right: var(--space-3);
+    transform: translateY(-50%);
+    min-width: 36px;
+    min-height: 36px;
+    font-size: 0;
+  }
+
+  .closeButton::before,
+  .closeButton::after {
+    content: "";
+    position: absolute;
+    width: 12px;
+    height: 1px;
+    background: currentColor;
+  }
+
+  .closeButton::before {
+    transform: rotate(45deg);
+  }
+
+  .closeButton::after {
+    transform: rotate(-45deg);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .message {
+    animation: none;
+  }
+}

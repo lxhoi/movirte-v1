@@ -1,0 +1,21 @@
+<svg width="900" height="620" viewBox="0 0 900 620" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="900" height="620" fill="#151515"/>
+  <rect x="76" y="52" width="748" height="516" rx="44" fill="url(#panel)"/>
+  <circle cx="699" cy="438" r="144" fill="#8B7355" fill-opacity="0.24"/>
+  <path d="M451 114C539 114 610 185 610 273V353C610 441 539 512 451 512C363 512 292 441 292 353V273C292 185 363 114 451 114Z" fill="url(#figure)"/>
+  <path d="M344 231C344 177 388 133 442 133H460C514 133 558 177 558 231V401C558 455 514 499 460 499H442C388 499 344 455 344 401V231Z" fill="url(#core)"/>
+  <defs>
+    <linearGradient id="panel" x1="450" y1="52" x2="450" y2="568" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#242424"/>
+      <stop offset="1" stop-color="#080808"/>
+    </linearGradient>
+    <linearGradient id="figure" x1="451" y1="114" x2="451" y2="512" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#342A20"/>
+      <stop offset="1" stop-color="#0B0B0B"/>
+    </linearGradient>
+    <linearGradient id="core" x1="451" y1="133" x2="451" y2="499" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#111111"/>
+      <stop offset="1" stop-color="#6E5A45"/>
+    </linearGradient>
+  </defs>
+</svg>

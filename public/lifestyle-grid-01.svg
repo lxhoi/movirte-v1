@@ -1,0 +1,28 @@
+<svg width="1400" height="1800" viewBox="0 0 1400 1800" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1400" height="1800" fill="#121212"/>
+  <circle cx="1078" cy="322" r="294" fill="#C6AE87" fill-opacity="0.22"/>
+  <rect x="110" y="98" width="1180" height="1604" rx="110" fill="url(#panel)"/>
+  <path d="M742 233C875 238 981 287 1061 378C1142 471 1178 583 1170 716C1161 846 1110 958 1018 1053C940 1133 831 1197 691 1245C575 1284 479 1363 401 1483C369 1532 348 1594 338 1668H1114C1192 1668 1256 1604 1256 1526V372C1256 294 1192 230 1114 230H742V233Z" fill="url(#glow)"/>
+  <path d="M649 269C820 269 959 408 959 579V1074C959 1245 820 1384 649 1384C478 1384 339 1245 339 1074V579C339 408 478 269 649 269Z" fill="url(#figure)"/>
+  <path d="M536 563C536 474 608 402 697 402H735C824 402 896 474 896 563V1109C896 1198 824 1270 735 1270H697C608 1270 536 1198 536 1109V563Z" fill="url(#dress)"/>
+  <path d="M598 480C669 499 740 499 810 480" stroke="#F4E7D2" stroke-opacity="0.4" stroke-width="4"/>
+  <path d="M564 854C675 907 778 907 874 854" stroke="#FFFFFF" stroke-opacity="0.1" stroke-width="3"/>
+  <defs>
+    <linearGradient id="panel" x1="700" y1="98" x2="700" y2="1702" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#272119"/>
+      <stop offset="1" stop-color="#090909"/>
+    </linearGradient>
+    <linearGradient id="glow" x1="754" y1="230" x2="754" y2="1668" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#B89E79"/>
+      <stop offset="1" stop-color="#B89E79" stop-opacity="0"/>
+    </linearGradient>
+    <linearGradient id="figure" x1="649" y1="269" x2="649" y2="1384" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#241F19"/>
+      <stop offset="1" stop-color="#0A0A0A"/>
+    </linearGradient>
+    <linearGradient id="dress" x1="716" y1="402" x2="716" y2="1270" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#1C1C1C"/>
+      <stop offset="1" stop-color="#6D5743"/>
+    </linearGradient>
+  </defs>
+</svg>

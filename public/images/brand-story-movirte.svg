@@ -1,0 +1,38 @@
+<svg width="1600" height="1200" viewBox="0 0 1600 1200" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1600" height="1200" fill="#090909"/>
+  <rect width="1600" height="1200" fill="url(#noise)"/>
+  <circle cx="1235" cy="260" r="276" fill="#D7C4A8" fill-opacity="0.18"/>
+  <circle cx="325" cy="965" r="344" fill="#8B7355" fill-opacity="0.22"/>
+  <rect x="170" y="96" width="1260" height="1008" rx="96" fill="url(#frame)"/>
+  <rect x="268" y="164" width="1064" height="872" rx="72" fill="#111111"/>
+  <path d="M1015 240C1121 311 1196 425 1214 583C1231 731 1184 865 1068 951C987 1011 898 1029 801 1007C691 983 603 921 537 820C472 721 455 611 486 490C520 356 599 257 723 194C834 137 931 152 1015 240Z" fill="url(#silhouette)"/>
+  <path d="M757 221C839 215 906 236 957 284C1011 335 1042 401 1052 481C1060 552 1044 625 1004 700C962 779 897 840 809 883C742 916 679 933 619 934C685 1027 783 1073 912 1070H1116C1188 1070 1246 1012 1246 940V304C1246 232 1188 174 1116 174H846C816 174 786 190 757 221Z" fill="url(#highlight)" fill-opacity="0.72"/>
+  <path d="M731 302C780 281 836 275 899 285C960 297 1013 326 1058 371" stroke="#E9DCC7" stroke-opacity="0.42" stroke-width="4"/>
+  <path d="M680 462C757 443 835 439 914 448C994 458 1062 481 1120 518" stroke="#FFFFFF" stroke-opacity="0.12" stroke-width="3"/>
+  <path d="M621 658C719 634 817 630 915 644C1011 658 1095 692 1166 745" stroke="#FFFFFF" stroke-opacity="0.12" stroke-width="3"/>
+  <path d="M543 905C676 933 800 939 916 922C1033 905 1133 858 1214 781" stroke="#8B7355" stroke-opacity="0.36" stroke-width="4"/>
+  <defs>
+    <linearGradient id="frame" x1="800" y1="96" x2="800" y2="1104" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#1D1A17"/>
+      <stop offset="1" stop-color="#0B0B0B"/>
+    </linearGradient>
+    <linearGradient id="silhouette" x1="849" y1="171" x2="849" y2="1032" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#2A241D"/>
+      <stop offset="0.48" stop-color="#171717"/>
+      <stop offset="1" stop-color="#0A0A0A"/>
+    </linearGradient>
+    <linearGradient id="highlight" x1="1001.5" y1="174" x2="1001.5" y2="1070" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#B89E79"/>
+      <stop offset="1" stop-color="#B89E79" stop-opacity="0"/>
+    </linearGradient>
+    <filter id="grain">
+      <feTurbulence type="fractalNoise" baseFrequency="0.75" numOctaves="2" stitchTiles="stitch"/>
+      <feComponentTransfer>
+        <feFuncA type="table" tableValues="0 0.045"/>
+      </feComponentTransfer>
+    </filter>
+    <pattern id="noise" width="220" height="220" patternUnits="userSpaceOnUse">
+      <rect width="220" height="220" filter="url(#grain)"/>
+    </pattern>
+  </defs>
+</svg>

@@ -1,0 +1,61 @@
+<svg width="1600" height="2000" viewBox="0 0 1600 2000" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1600" height="2000" fill="#0A0A0A"/>
+  <rect width="1600" height="2000" fill="url(#grain)"/>
+  <circle cx="1190" cy="420" r="360" fill="url(#glowOne)" fill-opacity="0.9"/>
+  <circle cx="540" cy="1110" r="520" fill="url(#glowTwo)" fill-opacity="0.8"/>
+  <path d="M1048 174C1207 276 1298 453 1283 670C1267 902 1126 1065 938 1157C818 1217 710 1315 653 1446C609 1545 603 1657 634 1782" stroke="url(#lineOne)" stroke-width="3"/>
+  <path d="M529 166C376 292 302 448 304 678C307 916 419 1086 607 1205C715 1274 815 1374 877 1482C939 1588 969 1702 957 1826" stroke="url(#lineTwo)" stroke-width="2.5"/>
+  <rect x="258" y="272" width="1084" height="1458" rx="542" stroke="rgba(255,255,255,0.18)" stroke-width="2"/>
+  <rect x="356" y="390" width="888" height="1220" rx="444" stroke="rgba(255,255,255,0.12)" stroke-width="1.5"/>
+  <path d="M798 365C946 365 1067 484 1067 632V1341C1067 1489 946 1609 798 1609C650 1609 530 1489 530 1341V632C530 484 650 365 798 365Z" fill="url(#silhouette)"/>
+  <path d="M650 820C650 729 724 655 815 655H830C921 655 995 729 995 820V1322C995 1413 921 1487 830 1487H815C724 1487 650 1413 650 1322V820Z" fill="url(#dress)"/>
+  <path d="M719 693C719 629 771 577 835 577C899 577 951 629 951 693V799H719V693Z" fill="url(#bodice)"/>
+  <path d="M669 1116C764 1168 861 1167 960 1116" stroke="rgba(255,255,255,0.14)" stroke-width="2"/>
+  <path d="M658 1284C759 1338 867 1338 969 1284" stroke="rgba(255,255,255,0.12)" stroke-width="2"/>
+  <rect x="498" y="1450" width="612" height="156" fill="url(#shadowFade)"/>
+  <defs>
+    <radialGradient id="glowOne" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(1190 420) rotate(90) scale(360)">
+      <stop stop-color="#E8DCC5"/>
+      <stop offset="1" stop-color="#0A0A0A" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="glowTwo" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(540 1110) rotate(90) scale(520)">
+      <stop stop-color="#7C6444"/>
+      <stop offset="1" stop-color="#0A0A0A" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="lineOne" x1="1048" y1="174" x2="634" y2="1782" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#E6D4B5" stop-opacity="0.72"/>
+      <stop offset="1" stop-color="#8D7450" stop-opacity="0.08"/>
+    </linearGradient>
+    <linearGradient id="lineTwo" x1="529" y1="166" x2="957" y2="1826" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#E6D4B5" stop-opacity="0.42"/>
+      <stop offset="1" stop-color="#8D7450" stop-opacity="0.08"/>
+    </linearGradient>
+    <linearGradient id="silhouette" x1="798" y1="365" x2="798" y2="1609" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#1B1B1B"/>
+      <stop offset="1" stop-color="#090909"/>
+    </linearGradient>
+    <linearGradient id="dress" x1="822.5" y1="655" x2="822.5" y2="1487" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#151515"/>
+      <stop offset="0.48" stop-color="#2A2219"/>
+      <stop offset="1" stop-color="#0C0C0C"/>
+    </linearGradient>
+    <linearGradient id="bodice" x1="835" y1="577" x2="835" y2="799" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#403223"/>
+      <stop offset="1" stop-color="#181818"/>
+    </linearGradient>
+    <linearGradient id="shadowFade" x1="804" y1="1450" x2="804" y2="1606" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#000000" stop-opacity="0"/>
+      <stop offset="1" stop-color="#000000" stop-opacity="0.7"/>
+    </linearGradient>
+    <filter id="noise">
+      <feTurbulence type="fractalNoise" baseFrequency="0.85" numOctaves="2" stitchTiles="stitch"/>
+      <feColorMatrix type="saturate" values="0"/>
+      <feComponentTransfer>
+        <feFuncA type="table" tableValues="0 0.055"/>
+      </feComponentTransfer>
+    </filter>
+    <pattern id="grain" width="240" height="240" patternUnits="userSpaceOnUse">
+      <rect width="240" height="240" filter="url(#noise)"/>
+    </pattern>
+  </defs>
+</svg>
