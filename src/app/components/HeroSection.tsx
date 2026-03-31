@@ -7,7 +7,7 @@ export default function HeroSection() {
     <section id="hero" className={styles.hero}>
       <div className={styles.media}>
         <Image
-          src="/images/hero-movirte.svg"
+          src="/images/hero-background.jpg"
           alt="Editorial hero artwork for MOVIRTE"
           fill
           priority

@@ -3,46 +3,8 @@
 import Image from "next/image";
 import { useRef, useState } from "react";
 import { ArrowLeft, ArrowRight } from "lucide-react";
+import { featuredProducts } from "./catalogProducts";
 import styles from "./ProductCarousel.module.css";
-
-const PRODUCTS = [
-  {
-    title: "Obsidian Tailoring Coat",
-    price: "$420",
-    image: "/images/product-obsidian-tailoring.svg",
-    colors: ["#111111", "#8B7355", "#E8DFD3"],
-  },
-  {
-    title: "Heritage Drape Dress",
-    price: "$360",
-    image: "/images/product-heritage-dress.svg",
-    colors: ["#8C7156", "#EADFCC", "#2E2620"],
-  },
-  {
-    title: "Midnight Contrast Set",
-    price: "$390",
-    image: "/images/product-midnight-set.svg",
-    colors: ["#F4EFE7", "#0F0F0F", "#B89E79"],
-  },
-  {
-    title: "Stone Layering Jacket",
-    price: "$330",
-    image: "/images/product-stone-layering.svg",
-    colors: ["#D9CDBD", "#8A7761", "#F6F2EC"],
-  },
-  {
-    title: "Silk Column Dress",
-    price: "$410",
-    image: "/images/product-silk-column.svg",
-    colors: ["#F7F2EA", "#BFA98A", "#5E4B36"],
-  },
-  {
-    title: "Atelier Knit Top",
-    price: "$240",
-    image: "/images/product-atelier-knit.svg",
-    colors: ["#B89E79", "#544536", "#171717"],
-  },
-] as const;
 
 export default function ProductCarousel() {
   const railRef = useRef<HTMLDivElement>(null);
@@ -141,7 +103,7 @@ export default function ProductCarousel() {
         onPointerUp={handlePointerUp}
         onPointerCancel={handlePointerUp}
       >
-        {PRODUCTS.map((product) => (
+        {featuredProducts.map((product) => (
           <article
             key={product.title}
             className={styles.card}
@@ -155,6 +117,15 @@ export default function ProductCarousel() {
                 sizes="(max-width: 480px) 100vw, (max-width: 768px) 50vw, 25vw"
                 className={styles.image}
               />
+              {product.secondaryImage ? (
+                <Image
+                  src={product.secondaryImage}
+                  alt={`${product.title} alternate view`}
+                  fill
+                  sizes="(max-width: 480px) 100vw, (max-width: 768px) 50vw, 25vw"
+                  className={`${styles.image} ${styles.secondaryImage}`}
+                />
+              ) : null}
             </div>
 
             <div className={styles.meta}>

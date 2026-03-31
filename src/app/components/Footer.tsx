@@ -1,46 +1,19 @@
 "use client";
 
-import Image from "next/image";
 import { Camera, Users, Music2, ArrowRight } from "lucide-react";
 import { useLocale } from "next-intl";
 import { Link, usePathname, useRouter } from "@/i18n/navigation";
 import styles from "./Footer.module.css";
 
-const FOOTER_IMAGES = [
-  {
-    eyebrow: "Saigon Atelier",
-    title: "Crafted in quiet contrast",
-    image: "/images/footer-strip-01.svg",
-  },
-  {
-    eyebrow: "Campaign Notes",
-    title: "Heritage silhouettes reimagined",
-    image: "/images/footer-strip-02.svg",
-  },
-  {
-    eyebrow: "Studio Moments",
-    title: "Textures, tailoring, and light",
-    image: "/images/footer-strip-03.svg",
-  },
-  {
-    eyebrow: "New Season",
-    title: "The uniform for movement",
-    image: "/images/footer-strip-04.svg",
-  },
-];
-
 const QUICK_LINKS = [
-  { href: "/new-in", label: "New In" },
-  { href: "/clothing", label: "Clothing" },
-  { href: "/collections", label: "Collections" },
-  { href: "/accessories", label: "Accessories" },
+  { href: "/terms", label: "Terms of Service" },
+  { href: "/privacy", label: "Privacy Policy" },
 ];
 
 const HELP_LINKS = [
-  { href: "/contact", label: "Contact Us" },
-  { href: "/shipping", label: "Shipping Policy" },
-  { href: "/returns", label: "Return Policy" },
-  { href: "/faq", label: "FAQ" },
+  { href: "/returns", label: "Returns and Exchanges" },
+  { href: "/shipping", label: "Shipping" },
+  { href: "/stockists", label: "Where to Purchase MOVIRTE" },
 ];
 
 const SOCIAL_LINKS = [
@@ -60,31 +33,11 @@ export default function Footer() {
 
   return (
     <footer className={styles.footer}>
-      <div className={styles.imageStrip} aria-hidden="true">
-        {FOOTER_IMAGES.map((image, index) => (
-          <div key={image.title} className={styles.imageCard} data-tone={index + 1}>
-            <Image
-              src={image.image}
-              alt={image.title}
-              fill
-              sizes="(max-width: 480px) 100vw, (max-width: 768px) 50vw, 25vw"
-              className={styles.image}
-            />
-            <div className={styles.imageOverlay}>
-              <span className={styles.imageEyebrow}>{image.eyebrow}</span>
-              <p className={styles.imageTitle}>{image.title}</p>
-            </div>
-          </div>
-        ))}
-      </div>
-
       <div className={styles.newsletterSection}>
         <div className={styles.newsletterCopy}>
-          <span className={styles.kicker}>Newsletter</span>
           <h2 className={styles.heading}>Join The Movement</h2>
           <p className={styles.description}>
-            Receive collection drops, editorial notes, and private access to
-            members-only releases.
+            To Start Earning Points &amp; Gain Access To Exclusive Discounts
           </p>
         </div>
 
@@ -96,24 +49,16 @@ export default function Footer() {
             id="newsletter-email"
             type="email"
             className={styles.input}
-            placeholder="Email address"
+            placeholder="Email"
             autoComplete="email"
           />
-          <button type="submit" className={styles.submitButton}>
-            Subscribe
-            <ArrowRight size={16} strokeWidth={1.7} />
+          <button type="submit" className={styles.submitButton} aria-label="Subscribe">
+            <ArrowRight size={18} strokeWidth={1.7} />
           </button>
         </form>
       </div>
 
       <div className={styles.main}>
-        <div className={styles.brand}>
-          <Link href="/" className={styles.logo}>
-            MOVIRTE
-          </Link>
-          <p className={styles.tagline}>Carrying Heritage Forward.</p>
-        </div>
-
         <div className={styles.links}>
           <div className={styles.column}>
             <h3>Quick Links</h3>
@@ -163,42 +108,31 @@ export default function Footer() {
       </div>
 
       <div className={styles.bottomBar}>
+        <div className={styles.localeMeta}>
+          <button type="button" className={styles.metaLink}>
+            Vietnam (₫)
+          </button>
+          <span className={styles.metaDivider}>•</span>
+          <button
+            type="button"
+            className={styles.metaLink}
+            onClick={() => handleLocaleChange(locale === "en" ? "vi" : "en")}
+          >
+            {locale === "en" ? "English" : "Tiếng Việt"}
+          </button>
+        </div>
+
         <p className={styles.copyright}>
-          &copy; {new Date().getFullYear()} MOVIRTE. All rights reserved.
+          &copy; {new Date().getFullYear()} MOVIRTE
         </p>
 
-        <div className={styles.controls}>
-          <div className={styles.selectorGroup} aria-label="Locale selector">
-            <button
-              type="button"
-              className={`${styles.selectorButton} ${
-                locale === "vi" ? styles.selectorButtonActive : ""
-              }`}
-              onClick={() => handleLocaleChange("vi")}
-              aria-pressed={locale === "vi"}
-            >
-              VN
-            </button>
-            <button
-              type="button"
-              className={`${styles.selectorButton} ${
-                locale === "en" ? styles.selectorButtonActive : ""
-              }`}
-              onClick={() => handleLocaleChange("en")}
-              aria-pressed={locale === "en"}
-            >
-              EN
-            </button>
-          </div>
-
-          <div className={styles.selectorGroup} aria-label="Currency selector">
-            <button type="button" className={styles.selectorButton}>
-              USD
-            </button>
-            <button type="button" className={styles.selectorButton}>
-              VND
-            </button>
-          </div>
+        <div className={styles.paymentRow}>
+          <span className={styles.paymentPill}>Amex</span>
+          <span className={styles.paymentPill}>Apple Pay</span>
+          <span className={styles.paymentPill}>G Pay</span>
+          <span className={styles.paymentPill}>Klarna</span>
+          <span className={styles.paymentPill}>Mastercard</span>
+          <span className={styles.paymentPill}>Visa</span>
         </div>
       </div>
     </footer>

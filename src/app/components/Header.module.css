@@ -1,21 +1,24 @@
 .header {
-  position: sticky;
-  top: 0;
+  position: absolute;
+  top: 42px;
+  left: 0;
+  right: 0;
   z-index: var(--z-sticky);
   width: 100%;
-  border-bottom: 1px solid transparent;
-  transition:
-    background-color var(--duration-normal) var(--ease-out),
-    border-color var(--duration-normal) var(--ease-out),
-    box-shadow var(--duration-normal) var(--ease-out),
-    backdrop-filter var(--duration-normal) var(--ease-out);
+  color: var(--color-white);
+  transition: color var(--duration-normal) var(--ease-out);
 }
 
-.headerScrolled {
-  background: rgba(255, 255, 255, 0.78);
-  border-color: var(--color-border);
-  box-shadow: 0 12px 40px rgba(17, 17, 17, 0.06);
-  backdrop-filter: blur(18px);
+.headerPinned {
+  position: fixed;
+  top: 0;
+  color: var(--color-black);
+}
+
+.headerPinnedDark {
+  position: fixed;
+  top: 0;
+  color: var(--color-white);
 }
 
 .inner {
@@ -26,6 +29,30 @@
   min-height: var(--header-height);
   padding: 0 var(--gutter);
   gap: var(--space-6);
+  border-bottom: 1px solid transparent;
+  background: transparent;
+  box-shadow: none;
+  backdrop-filter: none;
+  transition:
+    background-color var(--duration-normal) var(--ease-out),
+    border-color var(--duration-normal) var(--ease-out),
+    box-shadow var(--duration-normal) var(--ease-out),
+    backdrop-filter var(--duration-normal) var(--ease-out),
+    color var(--duration-normal) var(--ease-out);
+}
+
+.innerPinned {
+  background: rgba(255, 255, 255, 0.78);
+  border-color: var(--color-border);
+  box-shadow: 0 12px 40px rgba(17, 17, 17, 0.06);
+  backdrop-filter: blur(18px);
+}
+
+.innerPinnedDark {
+  background: rgba(10, 10, 10, 0.94);
+  border-color: rgba(255, 255, 255, 0.08);
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.25);
+  backdrop-filter: blur(18px);
 }
 
 .primaryNav {
@@ -121,9 +148,13 @@
   align-items: center;
   gap: 6px;
   padding: 4px 10px;
-  border: var(--border-thin);
+  border: 1px solid rgba(255, 255, 255, 0.28);
   border-radius: var(--radius-full);
-  background: rgba(255, 255, 255, 0.55);
+  background: transparent;
+  transition:
+    background-color var(--duration-fast) var(--ease-out),
+    border-color var(--duration-fast) var(--ease-out),
+    color var(--duration-fast) var(--ease-out);
 }
 
 .localeButton {
@@ -131,15 +162,18 @@
   font-size: 0.6875rem;
   letter-spacing: var(--tracking-ultra);
   text-transform: uppercase;
-  color: var(--color-gray-500);
+  color: inherit;
+  opacity: 0.68;
+  transition: opacity var(--duration-fast) var(--ease-out);
 }
 
 .localeButtonActive {
-  color: var(--color-fg);
+  opacity: 1;
 }
 
 .localeDivider {
-  color: var(--color-gray-400);
+  color: inherit;
+  opacity: 0.45;
   font-size: 0.625rem;
 }
 
@@ -150,19 +184,20 @@
   justify-content: center;
   width: 42px;
   height: 42px;
-  border: var(--border-thin);
+  border: 1px solid rgba(255, 255, 255, 0.28);
   border-radius: var(--radius-full);
-  background: rgba(255, 255, 255, 0.58);
+  background: transparent;
   transition:
     background-color var(--duration-fast) var(--ease-out),
     border-color var(--duration-fast) var(--ease-out),
-    transform var(--duration-fast) var(--ease-out);
+    transform var(--duration-fast) var(--ease-out),
+    color var(--duration-fast) var(--ease-out);
 }
 
 .iconButton:hover,
 .iconButton:focus-visible {
-  background: var(--color-white);
-  border-color: var(--color-border-strong);
+  background: rgba(255, 255, 255, 0.12);
+  border-color: rgba(255, 255, 255, 0.5);
   transform: translateY(-1px);
 }
 
@@ -177,10 +212,13 @@
   height: 18px;
   padding: 0 4px;
   border-radius: var(--radius-full);
-  background: var(--color-black);
-  color: var(--color-white);
+  background: var(--color-white);
+  color: var(--color-black);
   font-size: 0.625rem;
   line-height: 1;
+  transition:
+    background-color var(--duration-fast) var(--ease-out),
+    color var(--duration-fast) var(--ease-out);
 }
 
 .menuButton {
@@ -189,9 +227,58 @@
   justify-content: center;
   width: 42px;
   height: 42px;
-  border: var(--border-thin);
+  border: 1px solid rgba(255, 255, 255, 0.28);
   border-radius: var(--radius-full);
-  background: rgba(255, 255, 255, 0.58);
+  background: transparent;
+  color: inherit;
+  transition:
+    background-color var(--duration-fast) var(--ease-out),
+    border-color var(--duration-fast) var(--ease-out),
+    color var(--duration-fast) var(--ease-out);
+}
+
+.menuButton:hover,
+.menuButton:focus-visible {
+  background: rgba(255, 255, 255, 0.12);
+  border-color: rgba(255, 255, 255, 0.5);
+}
+
+.headerPinned .localeToggle {
+  background: rgba(255, 255, 255, 0.55);
+  border-color: rgba(17, 17, 17, 0.12);
+}
+
+.headerPinnedDark .localeToggle {
+  background: rgba(255, 255, 255, 0.06);
+  border-color: rgba(255, 255, 255, 0.16);
+}
+
+.headerPinned .iconButton,
+.headerPinned .menuButton {
+  border-color: rgba(17, 17, 17, 0.12);
+}
+
+.headerPinnedDark .iconButton,
+.headerPinnedDark .menuButton {
+  border-color: rgba(255, 255, 255, 0.16);
+}
+
+.headerPinned .iconButton:hover,
+.headerPinned .iconButton:focus-visible,
+.headerPinned .menuButton:hover,
+.headerPinned .menuButton:focus-visible {
+  background: rgba(17, 17, 17, 0.06);
+  border-color: rgba(17, 17, 17, 0.24);
+}
+
+.headerPinned .cartBadge {
+  background: var(--color-black);
+  color: var(--color-white);
+}
+
+.headerPinnedDark .cartBadge {
+  background: var(--color-white);
+  color: var(--color-black);
 }
 
 .drawerBackdrop {
@@ -346,6 +433,7 @@
 @media (max-width: 768px) {
   .inner {
     min-height: 76px;
+    padding: 0 var(--gutter);
     gap: var(--space-4);
   }
 

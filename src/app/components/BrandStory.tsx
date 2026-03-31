@@ -37,7 +37,7 @@ export default function BrandStory() {
     >
       <div className={styles.mediaWrap}>
         <Image
-          src="/images/brand-story-movirte.svg"
+          src="/images/banner-bg-image.webp"
           alt="Close-up editorial brand story artwork for MOVIRTE"
           fill
           sizes="100vw"

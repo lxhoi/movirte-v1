@@ -1,6 +1,8 @@
 .hero {
   position: relative;
   isolation: isolate;
+  margin-top: calc(-1 * var(--header-height));
+  padding-top: var(--header-height);
   min-height: calc(100vh - 42px);
   min-height: calc(100svh - 42px);
   display: grid;

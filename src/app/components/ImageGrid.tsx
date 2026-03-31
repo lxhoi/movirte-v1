@@ -5,28 +5,28 @@ const GRID_ITEMS = [
   {
     title: "Quiet tailoring in motion",
     subtitle: "Campaign Chapter 01",
-    image: "/images/lifestyle-grid-01.svg",
+    image: "/images/inside-the-world/quite-tailoring-in-motion.webp",
     large: true,
   },
   {
     title: "Studio light",
     subtitle: "Detail Focus",
-    image: "/images/lifestyle-grid-02.svg",
+    image: "/images/inside-the-world/heritage-silhouettes-reimagined.webp",
   },
   {
     title: "Monochrome ease",
     subtitle: "After Hours",
-    image: "/images/lifestyle-grid-03.svg",
+    image: "/images/inside-the-world/textures-tailoring-and-light.webp",
   },
   {
     title: "Soft structure",
     subtitle: "Craft Notes",
-    image: "/images/lifestyle-grid-04.svg",
+    image: "/images/inside-the-world/the-uniform-for-movement.webp",
   },
   {
     title: "Signature texture",
     subtitle: "Material Story",
-    image: "/images/lifestyle-grid-05.svg",
+    image: "/images/inside-the-world/signature-texture.webp",
   },
 ] as const;
 

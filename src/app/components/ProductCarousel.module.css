@@ -102,9 +102,21 @@
   transition: transform var(--duration-slower) var(--ease-out);
 }
 
+.secondaryImage {
+  opacity: 0;
+  transition:
+    opacity var(--duration-normal) var(--ease-out),
+    transform var(--duration-slower) var(--ease-out);
+}
+
 .card:hover .image,
 .card:focus-within .image {
   transform: scale(1.06);
+}
+
+.card:hover .secondaryImage,
+.card:focus-within .secondaryImage {
+  opacity: 1;
 }
 
 .meta {

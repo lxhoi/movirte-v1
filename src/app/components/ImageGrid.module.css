@@ -4,7 +4,7 @@
 }
 
 .header {
-  padding: 0 var(--gutter) var(--space-8);
+  padding: var(--space-8) var(--gutter) var(--space-10);
 }
 
 .kicker {
@@ -124,8 +124,7 @@
 
 @media (max-width: 480px) {
   .header {
-    padding-left: var(--space-4);
-    padding-right: var(--space-4);
+    padding: var(--space-6) var(--space-4) var(--space-8);
   }
 
   .cardLarge,

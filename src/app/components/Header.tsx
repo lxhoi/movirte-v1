@@ -27,21 +27,34 @@ export default function Header() {
   const locale = useLocale();
   const pathname = usePathname();
   const router = useRouter();
+  const isNewInPage = pathname === "/new-in";
   const cartCount = useCartStore((state) => getCartCount(state.cart));
   const toggleCart = useCartStore((state) => state.toggleCart);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [isScrolled, setIsScrolled] = useState(false);
+  const [isPinned, setIsPinned] = useState(isNewInPage);
+  const [useLightHeader, setUseLightHeader] = useState(false);
 
   useEffect(() => {
     const onScroll = () => {
-      setIsScrolled(window.scrollY > 20);
+      const header = document.querySelector("header");
+      const triggerPoint = header instanceof HTMLElement ? header.offsetHeight : 88;
+
+      if (isNewInPage) {
+        setIsPinned(true);
+        setUseLightHeader(window.scrollY >= triggerPoint);
+        return;
+      }
+
+      const passedTrigger = window.scrollY >= triggerPoint;
+      setIsPinned(passedTrigger);
+      setUseLightHeader(passedTrigger);
     };
 
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
 
     return () => window.removeEventListener("scroll", onScroll);
-  }, []);
+  }, [isNewInPage]);
 
   useEffect(() => {
     document.body.style.overflow = isMenuOpen ? "hidden" : "";
@@ -62,9 +75,15 @@ export default function Header() {
   return (
     <>
       <header
-        className={`${styles.header} ${isScrolled ? styles.headerScrolled : ""}`}
+        className={`${styles.header} ${isPinned ? styles.headerPinned : ""} ${
+          isPinned && !useLightHeader ? styles.headerPinnedDark : ""
+        }`}
       >
-        <div className={styles.inner}>
+        <div
+          className={`${styles.inner} ${isPinned && useLightHeader ? styles.innerPinned : ""} ${
+            isPinned && !useLightHeader ? styles.innerPinnedDark : ""
+          }`}
+        >
           <button
             type="button"
             className={styles.menuButton}
