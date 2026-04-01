@@ -13,7 +13,7 @@ const QUICK_LINKS = [
 const HELP_LINKS = [
   { href: "/returns", label: "Returns and Exchanges" },
   { href: "/shipping", label: "Shipping" },
-  { href: "/stockists", label: "Where to Purchase MOVIRTE" },
+  { href: "/locations", label: "Locations" },
 ];
 
 const SOCIAL_LINKS = [

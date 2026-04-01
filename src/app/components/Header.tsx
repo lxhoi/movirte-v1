@@ -1,6 +1,7 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
+import Image from "next/image";
 import {
   Menu,
   Search,
@@ -10,13 +11,18 @@ import {
   ChevronRight,
 } from "lucide-react";
 import { useLocale } from "next-intl";
-import { getCartCount, useCartStore } from "@/lib/stores/cart";
+import {
+  getCartCount,
+  getCartLines,
+  getCartTotal,
+  useCartStore,
+} from "@/lib/stores/cart";
 import { Link, usePathname, useRouter } from "@/i18n/navigation";
 import styles from "./Header.module.css";
 
 const PRIMARY_LINKS = [
   { href: "/new-in", label: "New In" },
-  { href: "/clothing", label: "Clothing" },
+  { href: "/new-in", label: "Clothing" },
   { href: "/collections", label: "Collections" },
   { href: "/accessories", label: "Accessories" },
   { href: "/about", label: "About Us" },
@@ -27,19 +33,25 @@ export default function Header() {
   const locale = useLocale();
   const pathname = usePathname();
   const router = useRouter();
-  const isNewInPage = pathname === "/new-in";
-  const cartCount = useCartStore((state) => getCartCount(state.cart));
+  const isHomePage = pathname === "/";
+  const cart = useCartStore((state) => state.cart);
   const toggleCart = useCartStore((state) => state.toggleCart);
+  const closeCart = useCartStore((state) => state.closeCart);
+  const isCartOpen = useCartStore((state) => state.isOpen);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [isPinned, setIsPinned] = useState(isNewInPage);
+  const [isSearchOpen, setIsSearchOpen] = useState(false);
+  const [isPinned, setIsPinned] = useState(!isHomePage);
   const [useLightHeader, setUseLightHeader] = useState(false);
+  const cartLines = useMemo(() => getCartLines(cart), [cart]);
+  const cartCount = useMemo(() => getCartCount(cart), [cart]);
+  const cartSubtotal = useMemo(() => getCartTotal(cart), [cart]);
 
   useEffect(() => {
     const onScroll = () => {
       const header = document.querySelector("header");
       const triggerPoint = header instanceof HTMLElement ? header.offsetHeight : 88;
 
-      if (isNewInPage) {
+      if (!isHomePage) {
         setIsPinned(true);
         setUseLightHeader(window.scrollY >= triggerPoint);
         return;
@@ -54,18 +66,21 @@ export default function Header() {
     window.addEventListener("scroll", onScroll, { passive: true });
 
     return () => window.removeEventListener("scroll", onScroll);
-  }, [isNewInPage]);
+  }, [isHomePage]);
 
   useEffect(() => {
-    document.body.style.overflow = isMenuOpen ? "hidden" : "";
+    document.body.style.overflow =
+      isMenuOpen || isSearchOpen || isCartOpen ? "hidden" : "";
 
     return () => {
       document.body.style.overflow = "";
     };
-  }, [isMenuOpen]);
+  }, [isMenuOpen, isSearchOpen, isCartOpen]);
 
   useEffect(() => {
     setIsMenuOpen(false);
+    setIsSearchOpen(false);
+    closeCart();
   }, [pathname, locale]);
 
   const handleLocaleChange = (nextLocale: string) => {
@@ -97,7 +112,11 @@ export default function Header() {
 
           <nav className={styles.primaryNav} aria-label="Primary">
             {PRIMARY_LINKS.map((link) => (
-              <Link key={link.href} href={link.href} className={styles.navLink}>
+              <Link
+                key={`${link.href}-${link.label}`}
+                href={link.href}
+                className={styles.navLink}
+              >
                 {link.label}
               </Link>
             ))}
@@ -143,7 +162,10 @@ export default function Header() {
             <button
               type="button"
               className={styles.iconButton}
+              onClick={() => setIsSearchOpen(true)}
               aria-label="Search"
+              aria-expanded={isSearchOpen}
+              aria-controls="search-panel"
             >
               <Search size={18} strokeWidth={1.7} />
             </button>
@@ -195,7 +217,7 @@ export default function Header() {
         <nav className={styles.drawerNav} aria-label="Mobile primary">
           {PRIMARY_LINKS.map((link) => (
             <Link
-              key={link.href}
+              key={`${link.href}-${link.label}`}
               href={link.href}
               className={styles.drawerLink}
               onClick={() => setIsMenuOpen(false)}
@@ -258,6 +280,170 @@ export default function Header() {
               EN
             </button>
           </div>
+        </div>
+      </aside>
+
+      <div
+        className={`${styles.searchBackdrop} ${
+          isSearchOpen ? styles.searchBackdropVisible : ""
+        }`}
+        onClick={() => setIsSearchOpen(false)}
+        aria-hidden="true"
+      />
+
+      <aside
+        id="search-panel"
+        className={`${styles.searchPanel} ${
+          isSearchOpen ? styles.searchPanelOpen : ""
+        }`}
+        aria-hidden={!isSearchOpen}
+        aria-label="Search panel"
+      >
+        <div className={styles.searchBar}>
+          <div className={styles.searchField}>
+            <Search size={18} strokeWidth={1.5} className={styles.searchIcon} />
+            <input
+              type="search"
+              name="search"
+              placeholder="Search"
+              className={styles.searchInput}
+              autoComplete="off"
+            />
+          </div>
+
+          <button
+            type="button"
+            className={styles.searchClose}
+            onClick={() => setIsSearchOpen(false)}
+            aria-label="Close search panel"
+          >
+            <X size={20} strokeWidth={1.5} />
+          </button>
+        </div>
+      </aside>
+
+      <div
+        className={`${styles.cartBackdrop} ${
+          isCartOpen ? styles.cartBackdropVisible : ""
+        }`}
+        onClick={closeCart}
+        aria-hidden="true"
+      />
+
+      <aside
+        className={`${styles.cartPanel} ${isCartOpen ? styles.cartPanelOpen : ""}`}
+        aria-hidden={!isCartOpen}
+        aria-label="Shopping bag"
+      >
+        <div className={styles.cartHeader}>
+          <div>
+            <p className={styles.cartEyebrow}>Shopping bag</p>
+            <h2 className={styles.cartTitle}>
+              {cartCount} item{cartCount === 1 ? "" : "s"}
+            </h2>
+          </div>
+
+          <button
+            type="button"
+            className={styles.cartClose}
+            onClick={closeCart}
+            aria-label="Close cart"
+          >
+            <X size={20} strokeWidth={1.5} />
+          </button>
+        </div>
+
+        <div className={styles.cartBody}>
+          {cartLines.length > 0 ? (
+            <div className={styles.cartList}>
+              {cartLines.map((line) => (
+                <article key={line.id} className={styles.cartItem}>
+                  <div className={styles.cartImageWrap}>
+                    {line.merchandise.product.featuredImage ? (
+                      <Image
+                        src={line.merchandise.product.featuredImage.url}
+                        alt={
+                          line.merchandise.product.featuredImage.altText ||
+                          line.merchandise.product.title
+                        }
+                        fill
+                        sizes="120px"
+                        className={styles.cartImage}
+                      />
+                    ) : (
+                      <div className={styles.cartImageFallback} />
+                    )}
+                  </div>
+
+                  <div className={styles.cartItemInfo}>
+                    <div className={styles.cartItemTop}>
+                      <h3 className={styles.cartItemTitle}>
+                        {line.merchandise.product.title}
+                      </h3>
+                      <p className={styles.cartItemPrice}>
+                        {line.cost.totalAmount.currencyCode}{" "}
+                        {line.cost.totalAmount.amount}
+                      </p>
+                    </div>
+
+                    <p className={styles.cartItemVariant}>
+                      {line.merchandise.title}
+                    </p>
+
+                    {line.merchandise.selectedOptions.length > 0 ? (
+                      <ul className={styles.cartOptions}>
+                        {line.merchandise.selectedOptions.map((option) => (
+                          <li key={`${line.id}-${option.name}`}>
+                            {option.name}: {option.value}
+                          </li>
+                        ))}
+                      </ul>
+                    ) : null}
+
+                    <p className={styles.cartQuantity}>Quantity: {line.quantity}</p>
+                  </div>
+                </article>
+              ))}
+            </div>
+          ) : (
+            <div className={styles.cartEmpty}>
+              <p className={styles.cartEmptyTitle}>Your bag is empty</p>
+              <p className={styles.cartEmptyText}>
+                Add a few pieces and they&apos;ll appear here in your bag drawer.
+              </p>
+              <Link href="/new-in" className={styles.cartContinue} onClick={closeCart}>
+                Continue shopping
+              </Link>
+            </div>
+          )}
+        </div>
+
+        <div className={styles.cartFooter}>
+          <div className={styles.cartSummary}>
+            <span>Subtotal</span>
+            <strong>
+              {cart?.cost.subtotalAmount.currencyCode ?? "USD"} {cartSubtotal}
+            </strong>
+          </div>
+
+          <p className={styles.cartNote}>
+            Taxes and shipping are calculated at checkout.
+          </p>
+
+          {cart?.checkoutUrl ? (
+            <a
+              href={cart.checkoutUrl}
+              className={styles.cartCheckout}
+              target="_blank"
+              rel="noreferrer"
+            >
+              Checkout
+            </a>
+          ) : (
+            <Link href="/new-in" className={styles.cartCheckout} onClick={closeCart}>
+              Shop now
+            </Link>
+          )}
         </div>
       </aside>
     </>
