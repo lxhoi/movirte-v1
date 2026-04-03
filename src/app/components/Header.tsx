@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useState, type MouseEvent } from "react";
 import Image from "next/image";
 import {
   Menu,
@@ -76,7 +76,8 @@ export default function Header() {
   const [isHeaderHovered, setIsHeaderHovered] = useState(false);
   const [isPinned, setIsPinned] = useState(!isHomePage);
   const [useLightHeader, setUseLightHeader] = useState(false);
-  const showLightHeader = useLightHeader || (isHomePage && isHeaderHovered);
+  const showLightHeader =
+    useLightHeader || (isHomePage && (isHeaderHovered || isClothingFlyoutOpen));
   const canShowClothingFlyout = !isHomePage || showLightHeader;
   const cartLines = useMemo(() => getCartLines(cart), [cart]);
   const cartCount = useMemo(() => getCartCount(cart), [cart]);
@@ -124,6 +125,18 @@ export default function Header() {
     router.replace(pathname, { locale: nextLocale });
   };
 
+  const handleHeaderMouseLeave = (
+    event: MouseEvent<HTMLElement | HTMLDivElement>,
+  ) => {
+    const nextTarget = event.relatedTarget;
+
+    if (nextTarget instanceof Node && event.currentTarget.contains(nextTarget)) {
+      return;
+    }
+
+    setIsHeaderHovered(false);
+  };
+
   return (
     <>
       <header
@@ -131,10 +144,7 @@ export default function Header() {
           showLightHeader ? styles.headerLight : ""
         } ${isPinned && !showLightHeader ? styles.headerPinnedDark : ""}`}
         onMouseEnter={() => setIsHeaderHovered(true)}
-        onMouseLeave={() => {
-          setIsHeaderHovered(false);
-          setIsClothingFlyoutOpen(false);
-        }}
+        onMouseLeave={handleHeaderMouseLeave}
       >
         <div
           className={`${styles.inner} ${showLightHeader ? styles.innerPinned : ""} ${
@@ -154,7 +164,8 @@ export default function Header() {
 
           <div
             className={styles.primaryNavWrap}
-            onMouseLeave={() => setIsClothingFlyoutOpen(false)}
+            onMouseEnter={() => setIsHeaderHovered(true)}
+            onMouseLeave={handleHeaderMouseLeave}
           >
             <nav className={styles.primaryNav} aria-label="Primary">
               {PRIMARY_LINKS.map((link) =>
@@ -195,6 +206,7 @@ export default function Header() {
                   setIsClothingFlyoutOpen(true);
                 }
               }}
+              onMouseLeave={() => setIsClothingFlyoutOpen(false)}
             >
               <div className={styles.flyoutContent}>
                 <div className={styles.flyoutColumns}>
