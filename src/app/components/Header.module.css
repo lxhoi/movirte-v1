@@ -62,6 +62,15 @@
   min-width: 0;
 }
 
+.primaryNavWrap {
+  position: static;
+}
+
+.flyoutTrigger {
+  display: inline-flex;
+  align-items: center;
+}
+
 .navLink {
   position: relative;
   display: inline-flex;
@@ -89,6 +98,95 @@
 .navLink:hover::after,
 .navLink:focus-visible::after {
   transform: scaleX(1);
+}
+
+.clothingFlyout {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  width: 100%;
+  padding: 0;
+  border-top: 1px solid rgba(17, 17, 17, 0.08);
+  background: rgba(255, 255, 255, 0.98);
+  box-shadow: 0 18px 48px rgba(17, 17, 17, 0.1);
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(10px);
+  transition:
+    opacity var(--duration-normal) var(--ease-out),
+    transform var(--duration-normal) var(--ease-out);
+}
+
+.clothingFlyoutOpen {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateY(0);
+}
+
+.flyoutContent {
+  display: grid;
+  grid-template-columns: 280px minmax(0, 1fr);
+  gap: var(--space-10);
+  width: 100%;
+  padding: var(--space-8) var(--gutter) var(--space-6);
+}
+
+.flyoutColumns {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--space-8);
+}
+
+.flyoutList {
+  display: grid;
+  gap: var(--space-4);
+  align-content: start;
+}
+
+.flyoutLink {
+  font-size: 0.95rem;
+  line-height: 1.35;
+}
+
+.flyoutFeatures {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--space-4);
+}
+
+.flyoutCard {
+  position: relative;
+  display: grid;
+  gap: var(--space-3);
+}
+
+.flyoutImageWrap {
+  position: relative;
+  aspect-ratio: 1.42;
+  overflow: hidden;
+  background: var(--color-gray-100);
+}
+
+.flyoutImage {
+  object-fit: cover;
+  transition: transform var(--duration-slow) var(--ease-out);
+}
+
+.flyoutCard:hover .flyoutImage,
+.flyoutCard:focus-visible .flyoutImage {
+  transform: scale(1.03);
+}
+
+.flyoutLabel {
+  position: absolute;
+  left: var(--space-3);
+  bottom: var(--space-3);
+  z-index: 1;
+  color: var(--color-white);
+  font-size: var(--text-lg);
+  font-weight: 600;
+  text-shadow: 0 2px 12px rgba(0, 0, 0, 0.3);
 }
 
 .logoWrap {
@@ -707,6 +805,10 @@
 
   .logoWrap {
     justify-content: center;
+  }
+
+  .clothingFlyout {
+    display: none;
   }
 }
 

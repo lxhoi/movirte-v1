@@ -20,6 +20,38 @@ import {
 import { Link, usePathname, useRouter } from "@/i18n/navigation";
 import styles from "./Header.module.css";
 
+const CLOTHING_FLYOUT_LINKS = [
+  [
+    { href: "/new-in", label: "View All" },
+    { href: "/new-in", label: "T-shirts" },
+    { href: "/new-in", label: "Hoodies & Sweatshirt" },
+    { href: "/new-in", label: "Tracksuits" },
+    { href: "/new-in", label: "Shorts" },
+    { href: "/new-in", label: "Bottoms" },
+  ],
+  [
+    { href: "/new-in", label: "Shirts" },
+    { href: "/new-in", label: "Activewear" },
+    { href: "/new-in", label: "Swim" },
+    { href: "/new-in", label: "Jackets/Outerwear" },
+    { href: "/new-in", label: "Kids" },
+    { href: "/new-in", label: "Caps & Accessories" },
+  ],
+] as const;
+
+const CLOTHING_FEATURED = [
+  {
+    href: "/new-in",
+    label: "T-shirts",
+    image: "/images/banner-bg-image.webp",
+  },
+  {
+    href: "/new-in",
+    label: "Tracksuits",
+    image: "/images/midnight-contrast-set/251202_AZM_0837.webp",
+  },
+] as const;
+
 const PRIMARY_LINKS = [
   { href: "/new-in", label: "New In" },
   { href: "/new-in", label: "Clothing" },
@@ -40,6 +72,7 @@ export default function Header() {
   const isCartOpen = useCartStore((state) => state.isOpen);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
+  const [isClothingFlyoutOpen, setIsClothingFlyoutOpen] = useState(false);
   const [isPinned, setIsPinned] = useState(!isHomePage);
   const [useLightHeader, setUseLightHeader] = useState(false);
   const cartLines = useMemo(() => getCartLines(cart), [cart]);
@@ -80,6 +113,7 @@ export default function Header() {
   useEffect(() => {
     setIsMenuOpen(false);
     setIsSearchOpen(false);
+    setIsClothingFlyoutOpen(false);
     closeCart();
   }, [pathname, locale]);
 
@@ -110,17 +144,78 @@ export default function Header() {
             <Menu size={18} strokeWidth={1.7} />
           </button>
 
-          <nav className={styles.primaryNav} aria-label="Primary">
-            {PRIMARY_LINKS.map((link) => (
-              <Link
-                key={`${link.href}-${link.label}`}
-                href={link.href}
-                className={styles.navLink}
-              >
-                {link.label}
-              </Link>
-            ))}
-          </nav>
+          <div
+            className={styles.primaryNavWrap}
+            onMouseLeave={() => setIsClothingFlyoutOpen(false)}
+          >
+            <nav className={styles.primaryNav} aria-label="Primary">
+              {PRIMARY_LINKS.map((link) =>
+                link.label === "Clothing" ? (
+                  <div
+                    key={`${link.href}-${link.label}`}
+                    className={styles.flyoutTrigger}
+                    onMouseEnter={() => setIsClothingFlyoutOpen(true)}
+                  >
+                    <Link href={link.href} className={styles.navLink}>
+                      {link.label}
+                    </Link>
+                  </div>
+                ) : (
+                  <Link
+                    key={`${link.href}-${link.label}`}
+                    href={link.href}
+                    className={styles.navLink}
+                  >
+                    {link.label}
+                  </Link>
+                ),
+              )}
+            </nav>
+
+            <div
+              className={`${styles.clothingFlyout} ${
+                isClothingFlyoutOpen ? styles.clothingFlyoutOpen : ""
+              }`}
+              onMouseEnter={() => setIsClothingFlyoutOpen(true)}
+            >
+              <div className={styles.flyoutContent}>
+                <div className={styles.flyoutColumns}>
+                  {CLOTHING_FLYOUT_LINKS.map((column, columnIndex) => (
+                    <ul key={`column-${columnIndex}`} className={styles.flyoutList}>
+                      {column.map((item) => (
+                        <li key={`${columnIndex}-${item.label}`}>
+                          <Link href={item.href} className={styles.flyoutLink}>
+                            {item.label}
+                          </Link>
+                        </li>
+                      ))}
+                    </ul>
+                  ))}
+                </div>
+
+                <div className={styles.flyoutFeatures}>
+                  {CLOTHING_FEATURED.map((item) => (
+                    <Link
+                      key={item.label}
+                      href={item.href}
+                      className={styles.flyoutCard}
+                    >
+                      <div className={styles.flyoutImageWrap}>
+                        <Image
+                          src={item.image}
+                          alt={item.label}
+                          fill
+                          sizes="(max-width: 1280px) 30vw, 24vw"
+                          className={styles.flyoutImage}
+                        />
+                      </div>
+                      <span className={styles.flyoutLabel}>{item.label}</span>
+                    </Link>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
 
           <div className={styles.logoWrap}>
             <Link href="/" className={styles.logo}>
