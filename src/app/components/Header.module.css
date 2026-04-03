@@ -150,9 +150,30 @@
 }
 
 .flyoutLink {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
   color: var(--color-black);
   font-size: 0.95rem;
   line-height: 1.35;
+}
+
+.flyoutLink::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -3px;
+  height: 1px;
+  background: currentColor;
+  transform: scaleX(0);
+  transform-origin: left center;
+  transition: transform var(--duration-normal) var(--ease-out);
+}
+
+.flyoutLink:hover::after,
+.flyoutLink:focus-visible::after {
+  transform: scaleX(1);
 }
 
 .flyoutFeatures {

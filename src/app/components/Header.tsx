@@ -17,36 +17,18 @@ import {
   getCartTotal,
   useCartStore,
 } from "@/lib/stores/cart";
+import { clothingFlyoutColumns } from "./clothingCategories";
 import { Link, usePathname, useRouter } from "@/i18n/navigation";
 import styles from "./Header.module.css";
 
-const CLOTHING_FLYOUT_LINKS = [
-  [
-    { href: "/new-in", label: "View All" },
-    { href: "/new-in", label: "T-shirts" },
-    { href: "/new-in", label: "Hoodies & Sweatshirt" },
-    { href: "/new-in", label: "Tracksuits" },
-    { href: "/new-in", label: "Shorts" },
-    { href: "/new-in", label: "Bottoms" },
-  ],
-  [
-    { href: "/new-in", label: "Shirts" },
-    { href: "/new-in", label: "Activewear" },
-    { href: "/new-in", label: "Swim" },
-    { href: "/new-in", label: "Jackets/Outerwear" },
-    { href: "/new-in", label: "Kids" },
-    { href: "/new-in", label: "Caps & Accessories" },
-  ],
-] as const;
-
 const CLOTHING_FEATURED = [
   {
-    href: "/new-in",
+    href: "/clothing/t-shirts",
     label: "T-shirts",
     image: "/images/banner-bg-image.webp",
   },
   {
-    href: "/new-in",
+    href: "/clothing/tracksuits",
     label: "Tracksuits",
     image: "/images/midnight-contrast-set/251202_AZM_0837.webp",
   },
@@ -210,7 +192,7 @@ export default function Header() {
             >
               <div className={styles.flyoutContent}>
                 <div className={styles.flyoutColumns}>
-                  {CLOTHING_FLYOUT_LINKS.map((column, columnIndex) => (
+                  {clothingFlyoutColumns.map((column, columnIndex) => (
                     <ul key={`column-${columnIndex}`} className={styles.flyoutList}>
                       {column.map((item) => (
                         <li key={`${columnIndex}-${item.label}`}>
