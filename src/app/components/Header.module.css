@@ -15,6 +15,10 @@
   color: var(--color-black);
 }
 
+.headerLight {
+  color: var(--color-black);
+}
+
 .headerPinnedDark {
   position: fixed;
   top: 0;
@@ -341,7 +345,8 @@
   border-color: rgba(255, 255, 255, 0.5);
 }
 
-.headerPinned .localeToggle {
+.headerPinned .localeToggle,
+.headerLight .localeToggle {
   background: rgba(255, 255, 255, 0.55);
   border-color: rgba(17, 17, 17, 0.12);
 }
@@ -352,7 +357,9 @@
 }
 
 .headerPinned .iconButton,
-.headerPinned .menuButton {
+.headerPinned .menuButton,
+.headerLight .iconButton,
+.headerLight .menuButton {
   border-color: rgba(17, 17, 17, 0.12);
 }
 
@@ -364,12 +371,17 @@
 .headerPinned .iconButton:hover,
 .headerPinned .iconButton:focus-visible,
 .headerPinned .menuButton:hover,
-.headerPinned .menuButton:focus-visible {
+.headerPinned .menuButton:focus-visible,
+.headerLight .iconButton:hover,
+.headerLight .iconButton:focus-visible,
+.headerLight .menuButton:hover,
+.headerLight .menuButton:focus-visible {
   background: rgba(17, 17, 17, 0.06);
   border-color: rgba(17, 17, 17, 0.24);
 }
 
-.headerPinned .cartBadge {
+.headerPinned .cartBadge,
+.headerLight .cartBadge {
   background: var(--color-black);
   color: var(--color-white);
 }

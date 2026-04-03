@@ -73,8 +73,11 @@ export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [isClothingFlyoutOpen, setIsClothingFlyoutOpen] = useState(false);
+  const [isHeaderHovered, setIsHeaderHovered] = useState(false);
   const [isPinned, setIsPinned] = useState(!isHomePage);
   const [useLightHeader, setUseLightHeader] = useState(false);
+  const showLightHeader = useLightHeader || (isHomePage && isHeaderHovered);
+  const canShowClothingFlyout = !isHomePage || showLightHeader;
   const cartLines = useMemo(() => getCartLines(cart), [cart]);
   const cartCount = useMemo(() => getCartCount(cart), [cart]);
   const cartSubtotal = useMemo(() => getCartTotal(cart), [cart]);
@@ -82,17 +85,16 @@ export default function Header() {
   useEffect(() => {
     const onScroll = () => {
       const header = document.querySelector("header");
-      const triggerPoint = header instanceof HTMLElement ? header.offsetHeight : 88;
+      const headerHeight = header instanceof HTMLElement ? header.offsetHeight : 88;
 
       if (!isHomePage) {
         setIsPinned(true);
-        setUseLightHeader(window.scrollY >= triggerPoint);
+        setUseLightHeader(window.scrollY >= headerHeight);
         return;
       }
 
-      const passedTrigger = window.scrollY >= triggerPoint;
-      setIsPinned(passedTrigger);
-      setUseLightHeader(passedTrigger);
+      setIsPinned(window.scrollY >= 42);
+      setUseLightHeader(window.scrollY > 0);
     };
 
     onScroll();
@@ -114,6 +116,7 @@ export default function Header() {
     setIsMenuOpen(false);
     setIsSearchOpen(false);
     setIsClothingFlyoutOpen(false);
+    setIsHeaderHovered(false);
     closeCart();
   }, [pathname, locale]);
 
@@ -125,12 +128,17 @@ export default function Header() {
     <>
       <header
         className={`${styles.header} ${isPinned ? styles.headerPinned : ""} ${
-          isPinned && !useLightHeader ? styles.headerPinnedDark : ""
-        }`}
+          showLightHeader ? styles.headerLight : ""
+        } ${isPinned && !showLightHeader ? styles.headerPinnedDark : ""}`}
+        onMouseEnter={() => setIsHeaderHovered(true)}
+        onMouseLeave={() => {
+          setIsHeaderHovered(false);
+          setIsClothingFlyoutOpen(false);
+        }}
       >
         <div
-          className={`${styles.inner} ${isPinned && useLightHeader ? styles.innerPinned : ""} ${
-            isPinned && !useLightHeader ? styles.innerPinnedDark : ""
+          className={`${styles.inner} ${showLightHeader ? styles.innerPinned : ""} ${
+            isPinned && !showLightHeader ? styles.innerPinnedDark : ""
           }`}
         >
           <button
@@ -154,7 +162,11 @@ export default function Header() {
                   <div
                     key={`${link.href}-${link.label}`}
                     className={styles.flyoutTrigger}
-                    onMouseEnter={() => setIsClothingFlyoutOpen(true)}
+                    onMouseEnter={() => {
+                      if (canShowClothingFlyout) {
+                        setIsClothingFlyoutOpen(true);
+                      }
+                    }}
                   >
                     <Link href={link.href} className={styles.navLink}>
                       {link.label}
@@ -174,9 +186,15 @@ export default function Header() {
 
             <div
               className={`${styles.clothingFlyout} ${
-                isClothingFlyoutOpen ? styles.clothingFlyoutOpen : ""
+                isClothingFlyoutOpen && canShowClothingFlyout
+                  ? styles.clothingFlyoutOpen
+                  : ""
               }`}
-              onMouseEnter={() => setIsClothingFlyoutOpen(true)}
+              onMouseEnter={() => {
+                if (canShowClothingFlyout) {
+                  setIsClothingFlyoutOpen(true);
+                }
+              }}
             >
               <div className={styles.flyoutContent}>
                 <div className={styles.flyoutColumns}>
