@@ -17,7 +17,9 @@ import {
   getCartTotal,
   useCartStore,
 } from "@/lib/stores/cart";
+import { accessoryFlyoutLinks } from "./accessoryCategories";
 import { clothingFlyoutColumns } from "./clothingCategories";
+import { collectionFlyoutLinks } from "./collectionCategories";
 import { Link, usePathname, useRouter } from "@/i18n/navigation";
 import styles from "./Header.module.css";
 
@@ -54,12 +56,14 @@ export default function Header() {
   const isCartOpen = useCartStore((state) => state.isOpen);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
-  const [isClothingFlyoutOpen, setIsClothingFlyoutOpen] = useState(false);
+  const [activeFlyout, setActiveFlyout] = useState<
+    "clothing" | "collections" | "accessories" | null
+  >(null);
   const [isHeaderHovered, setIsHeaderHovered] = useState(false);
   const [isPinned, setIsPinned] = useState(!isHomePage);
   const [useLightHeader, setUseLightHeader] = useState(false);
   const showLightHeader =
-    useLightHeader || (isHomePage && (isHeaderHovered || isClothingFlyoutOpen));
+    useLightHeader || (isHomePage && (isHeaderHovered || activeFlyout !== null));
   const canShowClothingFlyout = !isHomePage || showLightHeader;
   const cartLines = useMemo(() => getCartLines(cart), [cart]);
   const cartCount = useMemo(() => getCartCount(cart), [cart]);
@@ -98,7 +102,7 @@ export default function Header() {
   useEffect(() => {
     setIsMenuOpen(false);
     setIsSearchOpen(false);
-    setIsClothingFlyoutOpen(false);
+    setActiveFlyout(null);
     setIsHeaderHovered(false);
     closeCart();
   }, [pathname, locale]);
@@ -157,7 +161,35 @@ export default function Header() {
                     className={styles.flyoutTrigger}
                     onMouseEnter={() => {
                       if (canShowClothingFlyout) {
-                        setIsClothingFlyoutOpen(true);
+                        setActiveFlyout("clothing");
+                      }
+                    }}
+                  >
+                    <Link href={link.href} className={styles.navLink}>
+                      {link.label}
+                    </Link>
+                  </div>
+                ) : link.label === "Collections" ? (
+                  <div
+                    key={`${link.href}-${link.label}`}
+                    className={styles.flyoutTrigger}
+                    onMouseEnter={() => {
+                      if (canShowClothingFlyout) {
+                        setActiveFlyout("collections");
+                      }
+                    }}
+                  >
+                    <Link href={link.href} className={styles.navLink}>
+                      {link.label}
+                    </Link>
+                  </div>
+                ) : link.label === "Accessories" ? (
+                  <div
+                    key={`${link.href}-${link.label}`}
+                    className={styles.flyoutTrigger}
+                    onMouseEnter={() => {
+                      if (canShowClothingFlyout) {
+                        setActiveFlyout("accessories");
                       }
                     }}
                   >
@@ -179,16 +211,16 @@ export default function Header() {
 
             <div
               className={`${styles.clothingFlyout} ${
-                isClothingFlyoutOpen && canShowClothingFlyout
+                activeFlyout === "clothing" && canShowClothingFlyout
                   ? styles.clothingFlyoutOpen
                   : ""
               }`}
               onMouseEnter={() => {
                 if (canShowClothingFlyout) {
-                  setIsClothingFlyoutOpen(true);
+                  setActiveFlyout("clothing");
                 }
               }}
-              onMouseLeave={() => setIsClothingFlyoutOpen(false)}
+              onMouseLeave={() => setActiveFlyout(null)}
             >
               <div className={styles.flyoutContent}>
                 <div className={styles.flyoutColumns}>
@@ -224,6 +256,127 @@ export default function Header() {
                       <span className={styles.flyoutLabel}>{item.label}</span>
                     </Link>
                   ))}
+                </div>
+              </div>
+            </div>
+
+            <div
+              className={`${styles.clothingFlyout} ${
+                activeFlyout === "collections" && canShowClothingFlyout
+                  ? styles.clothingFlyoutOpen
+                  : ""
+              }`}
+              onMouseEnter={() => {
+                if (canShowClothingFlyout) {
+                  setActiveFlyout("collections");
+                }
+              }}
+              onMouseLeave={() => setActiveFlyout(null)}
+            >
+              <div className={styles.flyoutContent}>
+                <div className={styles.collectionsListWrap}>
+                  <ul className={styles.flyoutList}>
+                    {collectionFlyoutLinks.map((item) => (
+                      <li key={item.slug}>
+                        <Link href={item.href} className={styles.flyoutLink}>
+                          {item.label}
+                        </Link>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+
+                <div className={styles.flyoutFeatures}>
+                  <Link
+                    href="/collections/balian-armenian-ceramics"
+                    className={styles.flyoutCard}
+                  >
+                    <div className={styles.flyoutImageWrap}>
+                      <Image
+                        src="/images/heritage-drape-dress/251202_AZM_0930.webp"
+                        alt="Balian Collection"
+                        fill
+                        sizes="(max-width: 1280px) 30vw, 24vw"
+                        className={styles.flyoutImage}
+                      />
+                    </div>
+                    <span className={styles.flyoutLabel}>Balian Collection</span>
+                  </Link>
+
+                  <Link
+                    href="/collections/les-gens-darmenie"
+                    className={styles.flyoutCard}
+                  >
+                    <div className={styles.flyoutImageWrap}>
+                      <Image
+                        src="/images/stone-layering-jacket/KhachkarWashedGrey.webp"
+                        alt="Les Gens Collection"
+                        fill
+                        sizes="(max-width: 1280px) 30vw, 24vw"
+                        className={styles.flyoutImage}
+                      />
+                    </div>
+                    <span className={styles.flyoutLabel}>Les Gens Collection</span>
+                  </Link>
+                </div>
+              </div>
+            </div>
+
+            <div
+              className={`${styles.clothingFlyout} ${
+                activeFlyout === "accessories" && canShowClothingFlyout
+                  ? styles.clothingFlyoutOpen
+                  : ""
+              }`}
+              onMouseEnter={() => {
+                if (canShowClothingFlyout) {
+                  setActiveFlyout("accessories");
+                }
+              }}
+              onMouseLeave={() => setActiveFlyout(null)}
+            >
+              <div className={styles.flyoutContent}>
+                <div className={styles.collectionsListWrap}>
+                  <ul className={styles.flyoutList}>
+                    {accessoryFlyoutLinks.map((item) => (
+                      <li key={item.slug}>
+                        <Link href={item.href} className={styles.flyoutLink}>
+                          {item.label}
+                        </Link>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+
+                <div className={styles.flyoutFeatures}>
+                  <Link href="/accessories/hats" className={styles.flyoutCard}>
+                    <div className={styles.flyoutImageWrap}>
+                      <Image
+                        src="/images/banner-bg-image.webp"
+                        alt="Hats"
+                        fill
+                        sizes="(max-width: 1280px) 30vw, 24vw"
+                        className={styles.flyoutImage}
+                      />
+                    </div>
+                    <span className={styles.flyoutLabel}>Hats</span>
+                  </Link>
+
+                  <Link
+                    href="/accessories/sports-accessories"
+                    className={styles.flyoutCard}
+                  >
+                    <div className={styles.flyoutImageWrap}>
+                      <Image
+                        src="/images/midnight-contrast-set/251202_AZM_0827.webp"
+                        alt="Sports Accessories"
+                        fill
+                        sizes="(max-width: 1280px) 30vw, 24vw"
+                        className={styles.flyoutImage}
+                      />
+                    </div>
+                    <span className={styles.flyoutLabel}>Sports Accessories</span>
+                  </Link>
                 </div>
               </div>
             </div>

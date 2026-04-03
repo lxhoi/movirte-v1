@@ -143,6 +143,10 @@
   gap: var(--space-8);
 }
 
+.collectionsListWrap {
+  max-width: 360px;
+}
+
 .flyoutList {
   display: grid;
   gap: var(--space-4);
