@@ -139,17 +139,27 @@
 }
 
 .launcher {
+  appearance: none;
+  -webkit-appearance: none;
   position: fixed;
   left: var(--space-4);
   bottom: var(--space-4);
   z-index: var(--z-floating);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   min-width: 184px;
   min-height: 82px;
   padding: var(--space-5) var(--space-6);
-  border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+  border: 0;
+  border-radius: 24px;
+  overflow: hidden;
+  background-clip: padding-box;
+  clip-path: inset(0 round 24px);
   background: var(--color-white);
   color: var(--color-black);
   box-shadow: var(--shadow-lg);
+  text-align: center;
   font-size: clamp(1.1rem, 2vw, 1.35rem);
   font-weight: 700;
   line-height: 1.1;

@@ -3,8 +3,8 @@
   isolation: isolate;
   margin-top: calc(-1 * var(--header-height));
   padding-top: var(--header-height);
-  min-height: calc(100vh - 42px);
-  min-height: calc(100svh - 42px);
+  min-height: calc(75vh - 42px);
+  min-height: calc(75svh - 42px);
   display: grid;
   align-items: end;
   overflow: hidden;
@@ -125,8 +125,8 @@
 
 @media (max-width: 768px) {
   .hero {
-    min-height: calc(100vh - 38px);
-    min-height: calc(100svh - 38px);
+    min-height: calc(75vh - 38px);
+    min-height: calc(75svh - 38px);
   }
 
   .overlay {
