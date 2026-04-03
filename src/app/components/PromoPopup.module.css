@@ -1,0 +1,208 @@
+.overlay {
+  position: fixed;
+  inset: 0;
+  z-index: calc(var(--z-modal) - 1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-6);
+  background: rgba(17, 17, 17, 0.48);
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition:
+    opacity var(--duration-normal) var(--ease-out),
+    visibility var(--duration-normal) var(--ease-out);
+}
+
+.overlayVisible {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+}
+
+.modal {
+  position: relative;
+  z-index: var(--z-modal);
+  width: min(420px, calc(100vw - 2 * var(--space-6)));
+  background: var(--color-black);
+  color: var(--color-white);
+  border-radius: var(--radius-xl);
+  overflow: hidden;
+  box-shadow: var(--shadow-xl);
+  opacity: 0;
+  transform: translateY(24px) scale(0.96);
+  transition:
+    opacity var(--duration-normal) var(--ease-out),
+    transform var(--duration-normal) var(--ease-out);
+}
+
+.modalVisible {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
+
+.closeButton {
+  position: absolute;
+  top: var(--space-3);
+  right: var(--space-3);
+  z-index: 2;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border-radius: var(--radius-full);
+  background: rgba(255, 255, 255, 0.86);
+  color: var(--color-black);
+}
+
+.banner {
+  padding: var(--space-3) var(--space-6);
+  background: #111111;
+  text-align: center;
+  font-size: var(--text-sm);
+  letter-spacing: var(--tracking-wide);
+  text-transform: none;
+}
+
+.mediaWrap {
+  position: relative;
+  aspect-ratio: 0.72;
+}
+
+.mediaWrap::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(180deg, rgba(0, 0, 0, 0.16) 0%, rgba(0, 0, 0, 0) 24%, rgba(0, 0, 0, 0.5) 100%);
+}
+
+.media {
+  object-fit: cover;
+}
+
+.content {
+  position: absolute;
+  inset: auto var(--space-8) var(--space-8);
+  z-index: 1;
+  display: grid;
+  justify-items: center;
+  gap: var(--space-4);
+}
+
+.offer {
+  padding: 6px 14px;
+  background: var(--color-white);
+  color: var(--color-black);
+  font-family: var(--font-body);
+  font-size: clamp(2rem, 4vw, 3rem);
+  font-weight: 800;
+  line-height: 1;
+  letter-spacing: var(--tracking-tight);
+}
+
+.heading {
+  max-width: 8ch;
+  text-align: center;
+  font-family: var(--font-body);
+  font-size: clamp(2rem, 5vw, 3.5rem);
+  font-weight: 800;
+  line-height: 0.98;
+  letter-spacing: -0.04em;
+}
+
+.primaryAction,
+.secondaryAction {
+  width: 100%;
+  border-radius: var(--radius-full);
+  text-align: center;
+  text-transform: uppercase;
+  letter-spacing: var(--tracking-wide);
+}
+
+.primaryAction {
+  padding: 15px var(--space-4);
+  background: var(--color-white);
+  color: var(--color-black);
+  font-size: var(--text-lg);
+  font-weight: 600;
+}
+
+.secondaryAction {
+  padding: 13px var(--space-4);
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  background: rgba(0, 0, 0, 0.78);
+  color: var(--color-white);
+  font-size: var(--text-base);
+}
+
+.launcher {
+  position: fixed;
+  left: var(--space-4);
+  bottom: var(--space-4);
+  z-index: var(--z-floating);
+  min-width: 184px;
+  min-height: 82px;
+  padding: var(--space-5) var(--space-6);
+  border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+  background: var(--color-white);
+  color: var(--color-black);
+  box-shadow: var(--shadow-lg);
+  font-size: clamp(1.1rem, 2vw, 1.35rem);
+  font-weight: 700;
+  line-height: 1.1;
+  transform: translateY(calc(100% + var(--space-6)));
+  opacity: 0;
+  pointer-events: none;
+  transition:
+    transform var(--duration-normal) var(--ease-out),
+    opacity var(--duration-normal) var(--ease-out);
+}
+
+.launcherVisible {
+  transform: translateY(0);
+  opacity: 1;
+  pointer-events: auto;
+}
+
+@media (max-width: 768px) {
+  .overlay {
+    padding: var(--space-4);
+  }
+
+  .modal {
+    width: min(380px, calc(100vw - 2 * var(--space-4)));
+  }
+
+  .content {
+    left: var(--space-5);
+    right: var(--space-5);
+    bottom: var(--space-5);
+  }
+
+  .offer {
+    font-size: 2rem;
+  }
+
+  .heading {
+    font-size: 2.75rem;
+  }
+
+  .primaryAction {
+    font-size: var(--text-base);
+  }
+
+  .secondaryAction {
+    font-size: var(--text-sm);
+  }
+
+  .launcher {
+    left: var(--space-3);
+    bottom: var(--space-3);
+    min-width: 160px;
+    min-height: 72px;
+    padding: var(--space-4) var(--space-5);
+  }
+}

@@ -7,6 +7,7 @@ import "../globals.css";
 import Footer from "../components/Footer";
 import AnnouncementBar from "../components/AnnouncementBar";
 import Header from "../components/Header";
+import PromoPopup from "../components/PromoPopup";
 import { routing } from "@/i18n/routing";
 
 const inter = Inter({
@@ -53,6 +54,7 @@ export default async function LocaleLayout({
         <Header />
         <main>{children}</main>
         <Footer />
+        <PromoPopup />
       </div>
     </NextIntlClientProvider>
   );
