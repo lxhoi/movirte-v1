@@ -3,6 +3,7 @@
 import { useEffect, useMemo, useState, type MouseEvent } from "react";
 import Image from "next/image";
 import {
+  Globe,
   Menu,
   Search,
   User,
@@ -45,6 +46,58 @@ const PRIMARY_LINKS = [
   { href: "/news", label: "News" },
 ] as const;
 
+const REGION_GROUPS = [
+  {
+    title: "Asia Pacific",
+    options: [
+      { code: "VN", label: "Vietnam", currencyCode: "VND", symbol: "₫" },
+      { code: "JP", label: "Japan", currencyCode: "JPY", symbol: "¥" },
+      { code: "KR", label: "South Korea", currencyCode: "KRW", symbol: "₩" },
+      { code: "SG", label: "Singapore", currencyCode: "SGD", symbol: "S$" },
+      { code: "AU", label: "Australia", currencyCode: "AUD", symbol: "A$" },
+    ],
+  },
+  {
+    title: "Europe",
+    options: [
+      { code: "GB", label: "United Kingdom", currencyCode: "GBP", symbol: "£" },
+      { code: "FR", label: "France", currencyCode: "EUR", symbol: "€" },
+      { code: "DE", label: "Germany", currencyCode: "EUR", symbol: "€" },
+      { code: "IT", label: "Italy", currencyCode: "EUR", symbol: "€" },
+    ],
+  },
+  {
+    title: "North America",
+    options: [
+      { code: "US", label: "United States", currencyCode: "USD", symbol: "$" },
+      { code: "CA", label: "Canada", currencyCode: "CAD", symbol: "C$" },
+      { code: "MX", label: "Mexico", currencyCode: "MXN", symbol: "MX$" },
+    ],
+  },
+  {
+    title: "Middle East",
+    options: [
+      {
+        code: "AE",
+        label: "United Arab Emirates",
+        currencyCode: "AED",
+        symbol: "AED",
+      },
+      { code: "SA", label: "Saudi Arabia", currencyCode: "SAR", symbol: "SAR" },
+    ],
+  },
+] as const;
+
+const REGIONS = REGION_GROUPS.flatMap((group) => group.options);
+const DEFAULT_REGION = REGION_GROUPS[0].options[0];
+const REGION_STORAGE_KEY = "movirte-region";
+const LANGUAGE_OPTIONS = [
+  { code: "en", label: "English", shortLabel: "EN" },
+  { code: "vi", label: "Հայերեն", shortLabel: "HY" },
+  { code: "fr", label: "Français", shortLabel: "FR" },
+  { code: "ru", label: "Русский", shortLabel: "RU" },
+] as const;
+
 export default function Header() {
   const locale = useLocale();
   const pathname = usePathname();
@@ -59,15 +112,22 @@ export default function Header() {
   const [activeFlyout, setActiveFlyout] = useState<
     "clothing" | "collections" | "accessories" | null
   >(null);
+  const [isRegionPickerOpen, setIsRegionPickerOpen] = useState(false);
+  const [isLanguagePickerOpen, setIsLanguagePickerOpen] = useState(false);
   const [isHeaderHovered, setIsHeaderHovered] = useState(false);
   const [isPinned, setIsPinned] = useState(!isHomePage);
   const [useLightHeader, setUseLightHeader] = useState(false);
+  const [selectedRegionCode, setSelectedRegionCode] = useState(DEFAULT_REGION.code);
   const showLightHeader =
     useLightHeader || (isHomePage && (isHeaderHovered || activeFlyout !== null));
   const canShowClothingFlyout = !isHomePage || showLightHeader;
   const cartLines = useMemo(() => getCartLines(cart), [cart]);
   const cartCount = useMemo(() => getCartCount(cart), [cart]);
   const cartSubtotal = useMemo(() => getCartTotal(cart), [cart]);
+  const selectedRegion =
+    REGIONS.find((option) => option.code === selectedRegionCode) ?? DEFAULT_REGION;
+  const selectedLanguage =
+    LANGUAGE_OPTIONS.find((option) => option.code === locale) ?? LANGUAGE_OPTIONS[0];
 
   useEffect(() => {
     const onScroll = () => {
@@ -92,23 +152,95 @@ export default function Header() {
 
   useEffect(() => {
     document.body.style.overflow =
-      isMenuOpen || isSearchOpen || isCartOpen ? "hidden" : "";
+      isMenuOpen ||
+      isSearchOpen ||
+      isCartOpen ||
+      isRegionPickerOpen ||
+      isLanguagePickerOpen
+        ? "hidden"
+        : "";
 
     return () => {
       document.body.style.overflow = "";
     };
-  }, [isMenuOpen, isSearchOpen, isCartOpen]);
+  }, [
+    isCartOpen,
+    isLanguagePickerOpen,
+    isMenuOpen,
+    isRegionPickerOpen,
+    isSearchOpen,
+  ]);
 
   useEffect(() => {
-    setIsMenuOpen(false);
-    setIsSearchOpen(false);
-    setActiveFlyout(null);
-    setIsHeaderHovered(false);
-    closeCart();
-  }, [pathname, locale]);
+    const storedRegion = window.localStorage.getItem(REGION_STORAGE_KEY);
+
+    if (!storedRegion || !REGIONS.some((option) => option.code === storedRegion)) {
+      return;
+    }
+
+    const timeoutId = window.setTimeout(() => {
+      setSelectedRegionCode(storedRegion);
+    }, 0);
+
+    return () => window.clearTimeout(timeoutId);
+  }, []);
+
+  useEffect(() => {
+    window.localStorage.setItem(REGION_STORAGE_KEY, selectedRegionCode);
+  }, [selectedRegionCode]);
+
+  useEffect(() => {
+    const timeoutId = window.setTimeout(() => {
+      setIsMenuOpen(false);
+      setIsSearchOpen(false);
+      setIsRegionPickerOpen(false);
+      setIsLanguagePickerOpen(false);
+      setActiveFlyout(null);
+      setIsHeaderHovered(false);
+      closeCart();
+    }, 0);
+
+    return () => window.clearTimeout(timeoutId);
+  }, [closeCart, locale, pathname]);
+
+  useEffect(() => {
+    if (!isRegionPickerOpen) {
+      return;
+    }
+
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        setIsRegionPickerOpen(false);
+      }
+    };
+
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [isRegionPickerOpen]);
+
+  useEffect(() => {
+    if (!isLanguagePickerOpen) {
+      return;
+    }
+
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        setIsLanguagePickerOpen(false);
+      }
+    };
+
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [isLanguagePickerOpen]);
 
   const handleLocaleChange = (nextLocale: string) => {
     router.replace(pathname, { locale: nextLocale });
+    setIsLanguagePickerOpen(false);
+  };
+
+  const handleRegionSelect = (regionCode: string) => {
+    setSelectedRegionCode(regionCode);
+    setIsRegionPickerOpen(false);
   };
 
   const handleHeaderMouseLeave = (
@@ -393,31 +525,32 @@ export default function Header() {
               Members Club
             </Link>
 
-            <div className={styles.localeToggle} aria-label="Locale toggle">
-              <button
-                type="button"
-                className={`${styles.localeButton} ${
-                  locale === "vi" ? styles.localeButtonActive : ""
-                }`}
-                onClick={() => handleLocaleChange("vi")}
-                aria-pressed={locale === "vi"}
-              >
-                VN
-              </button>
-              <span className={styles.localeDivider} aria-hidden="true">
-                /
+            <button
+              type="button"
+              className={styles.regionButton}
+              onClick={() => setIsRegionPickerOpen(true)}
+              aria-label={`Region and currency selector. Current region ${selectedRegion.label}, currency ${selectedRegion.currencyCode}.`}
+              aria-expanded={isRegionPickerOpen}
+              aria-controls="region-picker-dialog"
+            >
+              <Globe size={15} strokeWidth={1.6} />
+              <span className={styles.regionButtonText}>
+                {selectedRegion.code} ({selectedRegion.symbol})
               </span>
-              <button
-                type="button"
-                className={`${styles.localeButton} ${
-                  locale === "en" ? styles.localeButtonActive : ""
-                }`}
-                onClick={() => handleLocaleChange("en")}
-                aria-pressed={locale === "en"}
-              >
-                EN
-              </button>
-            </div>
+            </button>
+
+            <button
+              type="button"
+              className={styles.languageButton}
+              onClick={() => setIsLanguagePickerOpen(true)}
+              aria-label={`Language selector. Current language ${selectedLanguage.label}.`}
+              aria-expanded={isLanguagePickerOpen}
+              aria-controls="language-picker-dialog"
+            >
+              <span className={styles.languageButtonText}>
+                {selectedLanguage.shortLabel}
+              </span>
+            </button>
 
             <button
               type="button"
@@ -511,35 +644,145 @@ export default function Header() {
             Cart
             <span className={styles.drawerCartCount}>{cartCount}</span>
           </button>
+          <button
+            type="button"
+            className={styles.drawerUtilityButton}
+            onClick={() => setIsRegionPickerOpen(true)}
+          >
+            Region
+            <span className={styles.drawerUtilityMeta}>
+              {selectedRegion.code} ({selectedRegion.symbol})
+            </span>
+          </button>
+          <button
+            type="button"
+            className={styles.drawerUtilityButton}
+            onClick={() => setIsLanguagePickerOpen(true)}
+          >
+            Language
+            <span className={styles.drawerUtilityMeta}>
+              {selectedLanguage.shortLabel}
+            </span>
+          </button>
         </div>
 
         <div className={styles.drawerFooter}>
           <span className={styles.drawerFooterLabel}>Language</span>
-          <div className={styles.localeToggle} aria-label="Mobile locale toggle">
-            <button
-              type="button"
-              className={`${styles.localeButton} ${
-                locale === "vi" ? styles.localeButtonActive : ""
-              }`}
-              onClick={() => handleLocaleChange("vi")}
-              aria-pressed={locale === "vi"}
-            >
-              VN
-            </button>
-            <span className={styles.localeDivider} aria-hidden="true">
-              /
-            </span>
-            <button
-              type="button"
-              className={`${styles.localeButton} ${
-                locale === "en" ? styles.localeButtonActive : ""
-              }`}
-              onClick={() => handleLocaleChange("en")}
-              aria-pressed={locale === "en"}
-            >
-              EN
-            </button>
-          </div>
+          <span className={styles.drawerUtilityMeta}>{selectedLanguage.label}</span>
+        </div>
+      </aside>
+
+      <div
+        className={`${styles.regionBackdrop} ${
+          isRegionPickerOpen ? styles.regionBackdropVisible : ""
+        }`}
+        onClick={() => setIsRegionPickerOpen(false)}
+        aria-hidden="true"
+      />
+
+      <aside
+        id="region-picker-dialog"
+        className={`${styles.regionModal} ${
+          isRegionPickerOpen ? styles.regionModalOpen : ""
+        }`}
+        role="dialog"
+        aria-modal="true"
+        aria-hidden={!isRegionPickerOpen}
+        aria-label="Update country or region"
+      >
+        <div className={styles.regionModalHeader}>
+          <h2 className={styles.regionModalTitle}>Update country/region</h2>
+          <button
+            type="button"
+            className={styles.regionModalClose}
+            onClick={() => setIsRegionPickerOpen(false)}
+            aria-label="Close region selector"
+          >
+            <X size={20} strokeWidth={1.5} />
+          </button>
+        </div>
+
+        <div className={styles.regionModalBody}>
+          {REGION_GROUPS.map((group) => (
+            <section key={group.title} className={styles.regionGroup}>
+              <h3 className={styles.regionGroupTitle}>{group.title}</h3>
+
+              <div className={styles.regionOptionList}>
+                {group.options.map((option) => {
+                  const isActive = option.code === selectedRegion.code;
+
+                  return (
+                    <button
+                      key={option.code}
+                      type="button"
+                      className={`${styles.regionOption} ${
+                        isActive ? styles.regionOptionActive : ""
+                      }`}
+                      onClick={() => handleRegionSelect(option.code)}
+                      aria-pressed={isActive}
+                    >
+                      <span className={styles.regionOptionCode}>{option.code}</span>
+                      <span className={styles.regionOptionLabel}>{option.label}</span>
+                      <span className={styles.regionOptionMeta}>
+                        {option.currencyCode} ({option.symbol})
+                      </span>
+                    </button>
+                  );
+                })}
+              </div>
+            </section>
+          ))}
+        </div>
+      </aside>
+
+      <div
+        className={`${styles.languageBackdrop} ${
+          isLanguagePickerOpen ? styles.languageBackdropVisible : ""
+        }`}
+        onClick={() => setIsLanguagePickerOpen(false)}
+        aria-hidden="true"
+      />
+
+      <aside
+        id="language-picker-dialog"
+        className={`${styles.languageModal} ${
+          isLanguagePickerOpen ? styles.languageModalOpen : ""
+        }`}
+        role="dialog"
+        aria-modal="true"
+        aria-hidden={!isLanguagePickerOpen}
+        aria-label="Update language"
+      >
+        <div className={styles.languageModalHeader}>
+          <h2 className={styles.languageModalTitle}>Update language</h2>
+          <button
+            type="button"
+            className={styles.languageModalClose}
+            onClick={() => setIsLanguagePickerOpen(false)}
+            aria-label="Close language selector"
+          >
+            <X size={20} strokeWidth={1.5} />
+          </button>
+        </div>
+
+        <div className={styles.languageModalBody}>
+          {LANGUAGE_OPTIONS.map((option) => {
+            const isActive = option.code === locale;
+
+            return (
+              <button
+                key={option.code}
+                type="button"
+                className={`${styles.languageOption} ${
+                  isActive ? styles.languageOptionActive : ""
+                }`}
+                onClick={() => handleLocaleChange(option.code)}
+                aria-pressed={isActive}
+              >
+                <span className={styles.languageOptionLabel}>{option.label}</span>
+              </button>
+            );
+          })}
         </div>
       </aside>
 
