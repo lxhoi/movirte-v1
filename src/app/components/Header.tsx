@@ -24,6 +24,18 @@ import { collectionFlyoutLinks } from "./collectionCategories";
 import { Link, usePathname, useRouter } from "@/i18n/navigation";
 import styles from "./Header.module.css";
 
+type RegionOption = {
+  code: string;
+  label: string;
+  currencyCode: string;
+  symbol: string;
+};
+
+type RegionGroup = {
+  title: string;
+  options: RegionOption[];
+};
+
 const CLOTHING_FEATURED = [
   {
     href: "/clothing/t-shirts",
@@ -46,7 +58,7 @@ const PRIMARY_LINKS = [
   { href: "/news", label: "News" },
 ] as const;
 
-const REGION_GROUPS = [
+const REGION_GROUPS: RegionGroup[] = [
   {
     title: "Asia Pacific",
     options: [
@@ -86,10 +98,15 @@ const REGION_GROUPS = [
       { code: "SA", label: "Saudi Arabia", currencyCode: "SAR", symbol: "SAR" },
     ],
   },
-] as const;
+] ;
 
-const REGIONS = REGION_GROUPS.flatMap((group) => group.options);
-const DEFAULT_REGION = REGION_GROUPS[0].options[0];
+const REGIONS: RegionOption[] = [];
+
+for (const group of REGION_GROUPS) {
+  REGIONS.push(...group.options);
+}
+
+const DEFAULT_REGION: RegionOption = REGION_GROUPS[0].options[0];
 const REGION_STORAGE_KEY = "movirte-region";
 const LANGUAGE_OPTIONS = [
   { code: "en", label: "English", shortLabel: "EN" },
