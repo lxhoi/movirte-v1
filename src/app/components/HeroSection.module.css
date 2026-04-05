@@ -1,4 +1,6 @@
 .hero {
+  --hero-shift-x: 0px;
+  --hero-shift-y: 0px;
   position: relative;
   isolation: isolate;
   margin-top: calc(-1 * var(--header-height));
@@ -23,17 +25,20 @@
   height: 100%;
   object-fit: cover;
   object-position: center center;
-  transform: none;
+  transform: translate3d(calc(var(--hero-shift-x) * -0.85), calc(var(--hero-shift-y) * -0.85), 0) scale(1.08);
   filter: saturate(1) contrast(0.98) brightness(1.06);
   animation: heroScale 1600ms var(--ease-out) both;
+  transition: transform 180ms var(--ease-out);
 }
 
 .scrim {
   position: absolute;
   inset: 0;
+  transform: translate3d(calc(var(--hero-shift-x) * -0.22), calc(var(--hero-shift-y) * -0.22), 0);
   background:
     linear-gradient(180deg, rgba(255, 255, 255, 0.16) 0%, rgba(255, 255, 255, 0.08) 18%, rgba(17, 17, 17, 0.08) 100%),
     radial-gradient(circle at 50% 58%, rgba(255, 255, 255, 0.08), transparent 34%);
+  transition: transform 180ms var(--ease-out);
 }
 
 .overlay {
@@ -47,15 +52,16 @@
 
 .copy {
   display: grid;
-  justify-items: center;
+  justify-items: start;
   align-content: end;
   gap: 0;
-  width: min(560px, calc(100vw - (var(--gutter) * 2)));
+  width: min(760px, calc(100vw - (var(--gutter) * 2)));
   margin: 0;
   padding-top: 0;
-  place-self: end center;
-  padding-bottom: clamp(28px, 7vh, 72px);
-  text-align: center;
+  place-self: end start;
+  padding-bottom: clamp(36px, 8vh, 88px);
+  padding-left: clamp(24px, 3vw, 64px);
+  text-align: left;
   color: var(--color-white);
 }
 
@@ -63,11 +69,10 @@
   max-width: none;
   margin: 0;
   font-family: var(--font-heading);
-  font-size: clamp(1.62rem, 2.88vw, 2.88rem);
+  font-size: clamp(3.64rem, 6.44vw, 6.44rem);
   font-weight: 500;
-  line-height: 0.9;
+  line-height: 0.92;
   letter-spacing: -0.045em;
-  white-space: nowrap;
   animation: fadeInUp 1100ms var(--ease-out) both;
   animation-delay: 180ms;
   color: var(--color-white);
@@ -113,8 +118,9 @@
   }
 
   .copy {
-    width: min(500px, calc(100vw - (var(--gutter) * 2)));
+    width: min(620px, calc(100vw - (var(--gutter) * 2)));
     padding-bottom: clamp(24px, 5vh, 48px);
+    padding-left: clamp(16px, 2vw, 32px);
   }
 }
 
@@ -135,12 +141,13 @@
 
   .copy {
     width: min(460px, calc(100vw - (var(--gutter) * 2)));
-    place-self: center;
+    place-self: end start;
     padding-bottom: 0;
+    padding-left: 0;
   }
 
   .brand {
-    font-size: clamp(1.56rem, 6vw, 2.4rem);
+    font-size: clamp(2.8rem, 9.8vw, 4.2rem);
   }
 
 }
@@ -158,17 +165,21 @@
 
   .copy {
     width: min(100%, 420px);
+    place-self: end start;
   }
 
   .brand {
-    font-size: clamp(1.4rem, 7vw, 1.95rem);
+    font-size: clamp(2.38rem, 11.2vw, 3.29rem);
   }
 
 }
 
 @media (prefers-reduced-motion: reduce) {
   .image,
+  .scrim,
   .brand {
     animation: none;
+    transition: none;
+    transform: none;
   }
 }
