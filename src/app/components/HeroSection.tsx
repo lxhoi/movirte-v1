@@ -1,4 +1,4 @@
-import { ArrowDownRight, ArrowRight } from "lucide-react";
+import { ArrowDownRight } from "lucide-react";
 import { Link } from "@/i18n/navigation";
 import styles from "./HeroSection.module.css";
 
@@ -16,7 +16,7 @@ export default function HeroSection() {
           poster="/images/movirte-hero.png"
           aria-hidden="true"
         >
-          <source src="/images/hero.mp4" type="video/mp4" />
+          <source src="/images/hero_1.mp4" type="video/mp4" />
         </video>
         <div className={styles.scrim} />
       </div>
@@ -41,22 +41,6 @@ export default function HeroSection() {
               Explore the arrival
               <ArrowDownRight size={18} strokeWidth={1.7} />
             </a>
-          </div>
-        </div>
-
-        <div className={styles.heroFoot}>
-          <div>
-            <p className={styles.footLabel}>Latest Arrival</p>
-            <p className={styles.footText}>A new cadence of movement, cut in motion.</p>
-          </div>
-
-          <div className={styles.footActions}>
-            <a href="#new-in" className={styles.footButton} aria-label="Go to latest arrival">
-              <ArrowDownRight size={18} strokeWidth={1.8} />
-            </a>
-            <Link href="/new-in" className={styles.footButton} aria-label="Open new in collection">
-              <ArrowRight size={18} strokeWidth={1.8} />
-            </Link>
           </div>
         </div>
       </div>
