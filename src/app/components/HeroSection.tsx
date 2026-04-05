@@ -1,3 +1,4 @@
+import Image from "next/image";
 import { ArrowDownRight } from "lucide-react";
 import { Link } from "@/i18n/navigation";
 import styles from "./HeroSection.module.css";
@@ -6,18 +7,14 @@ export default function HeroSection() {
   return (
     <section id="hero" className={styles.hero}>
       <div className={styles.media}>
-        <video
+        <Image
           className={styles.image}
-          autoPlay
-          muted
-          loop
-          playsInline
-          preload="metadata"
-          poster="/images/movirte-hero.png"
-          aria-hidden="true"
-        >
-          <source src="/images/hero_1.mp4" type="video/mp4" />
-        </video>
+          src="/images/hero-5.png"
+          alt="Editorial hero artwork for MOVIRTE"
+          fill
+          priority
+          sizes="100vw"
+        />
         <div className={styles.scrim} />
       </div>
 

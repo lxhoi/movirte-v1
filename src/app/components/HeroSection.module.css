@@ -3,8 +3,8 @@
   isolation: isolate;
   margin-top: calc(-1 * var(--header-height));
   padding-top: var(--header-height);
-  min-height: calc(74vh - 42px);
-  min-height: calc(74svh - 42px);
+  aspect-ratio: 6241 / 2012;
+  min-height: calc(100vw * 2012 / 6241);
   overflow: clip;
   background: #d9d4ca;
   scroll-margin-top: calc(var(--header-height) + 42px);
@@ -13,15 +13,18 @@
 .media {
   position: absolute;
   inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .image {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  object-position: center 38%;
-  transform: scale(1.02);
-  filter: saturate(0.96) contrast(0.94) brightness(1.02);
+  object-position: center center;
+  transform: none;
+  filter: saturate(1) contrast(0.98) brightness(1.06);
   animation: heroScale 1600ms var(--ease-out) both;
 }
 
@@ -29,28 +32,29 @@
   position: absolute;
   inset: 0;
   background:
-    linear-gradient(180deg, rgba(255, 255, 255, 0.32) 0%, rgba(255, 255, 255, 0.14) 16%, rgba(19, 22, 27, 0.1) 48%, rgba(8, 8, 8, 0.08) 100%),
-    radial-gradient(circle at 50% 28%, rgba(255, 255, 255, 0.34), transparent 30%);
+    linear-gradient(180deg, rgba(255, 255, 255, 0.16) 0%, rgba(255, 255, 255, 0.08) 18%, rgba(17, 17, 17, 0.08) 100%),
+    radial-gradient(circle at 50% 58%, rgba(255, 255, 255, 0.08), transparent 34%);
 }
 
 .overlay {
-  position: relative;
+  position: absolute;
+  inset: 0;
   z-index: 1;
-  display: flex;
-  align-items: flex-start;
-  justify-content: center;
-  min-height: inherit;
-  padding: clamp(7.5rem, 14vh, 10rem) var(--gutter) var(--space-8);
+  display: grid;
+  place-items: center;
+  padding: calc(var(--header-height) + 36px) var(--gutter) 0;
 }
 
 .copy {
   display: grid;
   justify-items: center;
-  align-content: start;
-  gap: var(--space-5);
-  width: min(900px, 100%);
-  margin: 0 auto;
-  padding-top: clamp(2rem, 5vh, 4.5rem);
+  align-content: end;
+  gap: var(--space-4);
+  width: min(560px, calc(100vw - (var(--gutter) * 2)));
+  margin: 0;
+  padding-top: 0;
+  place-self: end center;
+  padding-bottom: clamp(28px, 7vh, 72px);
   text-align: center;
   color: var(--color-white);
 }
@@ -74,10 +78,10 @@
 }
 
 .brand {
-  max-width: 10.5ch;
+  max-width: 9ch;
   margin: 0;
   font-family: var(--font-heading);
-  font-size: clamp(3.2rem, 6.5vw, 5.8rem);
+  font-size: clamp(2.7rem, 4.8vw, 4.8rem);
   font-weight: 500;
   line-height: 0.9;
   letter-spacing: -0.045em;
@@ -93,10 +97,10 @@
 }
 
 .tagline {
-  max-width: 34ch;
-  color: rgba(255, 255, 255, 0.88);
-  font-size: clamp(0.9rem, 0.6vw + 0.72rem, 1.08rem);
-  line-height: 1.55;
+  max-width: 32ch;
+  color: rgba(255, 255, 255, 0.92);
+  font-size: clamp(0.84rem, 0.45vw + 0.72rem, 0.98rem);
+  line-height: 1.5;
   animation: fadeInUp 1100ms var(--ease-out) both;
   animation-delay: 300ms;
 }
@@ -117,8 +121,8 @@
   align-items: center;
   justify-content: center;
   gap: 10px;
-  min-height: 56px;
-  padding: 0 28px;
+  min-height: 52px;
+  padding: 0 24px;
   border-radius: var(--radius-full);
   font-size: var(--text-xs);
   letter-spacing: var(--tracking-ultra);
@@ -182,50 +186,58 @@
 
 @media (max-width: 1024px) {
   .hero {
-    min-height: calc(70vh - 42px);
-    min-height: calc(70svh - 42px);
+    aspect-ratio: 6241 / 2012;
+    min-height: calc(100vw * 2012 / 6241);
   }
 
   .overlay {
-    padding-top: clamp(7rem, 11vh, 8rem);
+    padding: calc(var(--header-height) + 28px) var(--gutter) 0;
+  }
+
+  .copy {
+    width: min(500px, calc(100vw - (var(--gutter) * 2)));
+    padding-bottom: clamp(24px, 5vh, 48px);
   }
 }
 
 @media (max-width: 768px) {
   .hero {
-    min-height: calc(64vh - 38px);
-    min-height: calc(64svh - 38px);
+    aspect-ratio: auto;
+    min-height: calc(72vh - 38px);
+    min-height: calc(72svh - 38px);
   }
 
   .image {
-    object-position: center 42%;
+    object-position: 58% center;
   }
 
   .overlay {
-    padding: 7rem var(--gutter) var(--space-6);
+    padding: calc(var(--header-height) + 20px) var(--gutter) 0;
   }
 
   .copy {
     gap: var(--space-4);
-    padding-top: 1.5rem;
+    width: min(460px, calc(100vw - (var(--gutter) * 2)));
+    place-self: center;
+    padding-bottom: 0;
   }
 
   .brand {
-    font-size: clamp(2.8rem, 11vw, 4.2rem);
+    font-size: clamp(2.6rem, 10vw, 4rem);
     max-width: 9ch;
   }
 
   .tagline {
     max-width: 28ch;
-    font-size: 0.9rem;
+    font-size: 0.88rem;
   }
 
 }
 
 @media (max-width: 480px) {
   .hero {
-    min-height: calc(58vh - 38px);
-    min-height: calc(58svh - 38px);
+    min-height: calc(64vh - 38px);
+    min-height: calc(64svh - 38px);
   }
 
   .overlay {
@@ -233,10 +245,25 @@
     padding-right: var(--space-4);
   }
 
+  .copy {
+    width: min(100%, 420px);
+    gap: var(--space-3);
+  }
+
   .eyebrow {
     min-height: 32px;
     padding: 0 12px;
     font-size: 0.64rem;
+  }
+
+  .brand {
+    font-size: clamp(2.35rem, 12vw, 3.25rem);
+    max-width: 8.5ch;
+  }
+
+  .tagline {
+    font-size: 0.88rem;
+    line-height: 1.5;
   }
 
   .actions {
