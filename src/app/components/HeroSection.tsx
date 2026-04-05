@@ -1,3 +1,4 @@
+import { ArrowDownRight, ArrowRight } from "lucide-react";
 import { Link } from "@/i18n/navigation";
 import styles from "./HeroSection.module.css";
 
@@ -22,12 +23,41 @@ export default function HeroSection() {
 
       <div className={styles.overlay}>
         <div className={styles.copy}>
-          <p className={styles.eyebrow}>Modern Atelier / Vietnam</p>
-          <h1 className={styles.brand}>MOVIRTE</h1>
-          <p className={styles.tagline}>Carrying Heritage Forward.</p>
-          <Link href="/new-in" className={styles.cta}>
-            Shop Now
-          </Link>
+          <p className={styles.eyebrow}>Modern atelier / Vietnam</p>
+          <h1 className={styles.brand}>
+            Carrying Heritage
+            <span className={styles.brandAccent}> Forward.</span>
+          </h1>
+          <p className={styles.tagline}>
+            Tailoring motion, memory, and modern ritual into a new silhouette for
+            everyday arrival.
+          </p>
+
+          <div className={styles.actions}>
+            <Link href="/new-in" className={styles.ctaPrimary}>
+              Shop New In
+            </Link>
+            <a href="#new-in" className={styles.ctaSecondary}>
+              Explore the arrival
+              <ArrowDownRight size={18} strokeWidth={1.7} />
+            </a>
+          </div>
+        </div>
+
+        <div className={styles.heroFoot}>
+          <div>
+            <p className={styles.footLabel}>Latest Arrival</p>
+            <p className={styles.footText}>A new cadence of movement, cut in motion.</p>
+          </div>
+
+          <div className={styles.footActions}>
+            <a href="#new-in" className={styles.footButton} aria-label="Go to latest arrival">
+              <ArrowDownRight size={18} strokeWidth={1.8} />
+            </a>
+            <Link href="/new-in" className={styles.footButton} aria-label="Open new in collection">
+              <ArrowRight size={18} strokeWidth={1.8} />
+            </Link>
+          </div>
         </div>
       </div>
     </section>
