@@ -1,4 +1,3 @@
-import Image from "next/image";
 import { Link } from "@/i18n/navigation";
 import styles from "./HeroSection.module.css";
 
@@ -6,14 +5,18 @@ export default function HeroSection() {
   return (
     <section id="hero" className={styles.hero}>
       <div className={styles.media}>
-        <Image
-          src="/images/movirte-hero.png"
-          alt="Editorial hero artwork for MOVIRTE"
-          fill
-          priority
+        <video
           className={styles.image}
-          sizes="100vw"
-        />
+          autoPlay
+          muted
+          loop
+          playsInline
+          preload="metadata"
+          poster="/images/movirte-hero.png"
+          aria-hidden="true"
+        >
+          <source src="/images/hero.mp4" type="video/mp4" />
+        </video>
         <div className={styles.scrim} />
       </div>
 
