@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, type CSSProperties } from "react";
+import { useEffect, useState, type CSSProperties } from "react";
 import styles from "./HeroSection.module.css";
 
 export default function HeroSection() {
@@ -8,6 +8,28 @@ export default function HeroSection() {
     "--hero-shift-x": "0px",
     "--hero-shift-y": "0px",
   } as CSSProperties);
+  const [shouldLoadVideo, setShouldLoadVideo] = useState(false);
+
+  useEffect(() => {
+    const onWindow = window as Window & {
+      requestIdleCallback?: (callback: () => void, options?: { timeout: number }) => number;
+      cancelIdleCallback?: (handle: number) => void;
+    };
+
+    if (onWindow.requestIdleCallback) {
+      const idleId = onWindow.requestIdleCallback(() => {
+        setShouldLoadVideo(true);
+      }, { timeout: 600 });
+
+      return () => onWindow.cancelIdleCallback?.(idleId);
+    }
+
+    const timeoutId = window.setTimeout(() => {
+      setShouldLoadVideo(true);
+    }, 180);
+
+    return () => window.clearTimeout(timeoutId);
+  }, []);
 
   const handlePointerMove = (event: React.PointerEvent<HTMLElement>) => {
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
@@ -46,11 +68,11 @@ export default function HeroSection() {
           muted
           loop
           playsInline
-          preload="metadata"
+          preload="none"
           poster="/images/hero-5.png"
           aria-hidden="true"
         >
-          <source src="/images/loop.mp4" type="video/mp4" />
+          {shouldLoadVideo ? <source src="/images/loop.mp4" type="video/mp4" /> : null}
         </video>
         <div className={styles.scrim} />
       </div>
