@@ -1,7 +1,6 @@
 "use client";
 
 import { useState, type CSSProperties } from "react";
-import Image from "next/image";
 import styles from "./HeroSection.module.css";
 
 export default function HeroSection() {
@@ -41,14 +40,18 @@ export default function HeroSection() {
       onPointerLeave={handlePointerLeave}
     >
       <div className={styles.media}>
-        <Image
+        <video
           className={styles.image}
-          src="/images/hero-5.png"
-          alt="Editorial hero artwork for MOVIRTE"
-          fill
-          priority
-          sizes="100vw"
-        />
+          autoPlay
+          muted
+          loop
+          playsInline
+          preload="metadata"
+          poster="/images/hero-5.png"
+          aria-hidden="true"
+        >
+          <source src="/images/loop.mp4" type="video/mp4" />
+        </video>
         <div className={styles.scrim} />
       </div>
 

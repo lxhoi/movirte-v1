@@ -5,8 +5,8 @@
   isolation: isolate;
   margin-top: calc(-1 * var(--header-height));
   padding-top: var(--header-height);
-  aspect-ratio: 6241 / 2012;
-  min-height: calc(100vw * 2012 / 6241);
+  aspect-ratio: 16 / 9;
+  min-height: calc(100vw * 9 / 16);
   overflow: clip;
   background: #d9d4ca;
   scroll-margin-top: calc(var(--header-height) + 42px);
@@ -125,8 +125,8 @@
 
 @media (max-width: 1024px) {
   .hero {
-    aspect-ratio: 6241 / 2012;
-    min-height: calc(100vw * 2012 / 6241);
+    aspect-ratio: 16 / 9;
+    min-height: calc(100vw * 9 / 16);
   }
 
   .overlay {
