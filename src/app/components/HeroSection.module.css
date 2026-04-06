@@ -52,30 +52,46 @@
 
 .copy {
   display: grid;
-  justify-items: start;
-  align-content: end;
+  justify-items: center;
+  align-content: center;
   gap: 0;
-  width: min(760px, calc(100vw - (var(--gutter) * 2)));
+  width: min(1120px, calc(100vw - (var(--gutter) * 2)));
   margin: 0;
   padding-top: 0;
-  place-self: end start;
-  padding-bottom: clamp(36px, 8vh, 88px);
-  padding-left: clamp(24px, 3vw, 64px);
-  text-align: left;
+  place-self: center;
+  padding-bottom: 0;
+  padding-left: 0;
+  text-align: center;
   color: var(--color-white);
 }
 
 .brand {
-  max-width: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: clamp(18px, 2vw, 34px);
+  width: 100%;
   margin: 0;
   font-family: var(--font-heading);
-  font-size: clamp(3.64rem, 6.44vw, 6.44rem);
+  font-size: clamp(2.4rem, 4vw, 4.6rem);
   font-weight: 500;
-  line-height: 0.92;
-  letter-spacing: -0.045em;
+  line-height: 1;
+  letter-spacing: -0.03em;
   animation: fadeInUp 1100ms var(--ease-out) both;
   animation-delay: 180ms;
   color: var(--color-white);
+}
+
+.brandWord {
+  flex: 0 0 auto;
+  white-space: nowrap;
+}
+
+.brandDash {
+  flex: 1 1 140px;
+  min-width: 64px;
+  height: 2px;
+  background: rgba(255, 255, 255, 0.92);
 }
 
 .brandAccent {
@@ -118,9 +134,7 @@
   }
 
   .copy {
-    width: min(620px, calc(100vw - (var(--gutter) * 2)));
-    padding-bottom: clamp(24px, 5vh, 48px);
-    padding-left: clamp(16px, 2vw, 32px);
+    width: min(920px, calc(100vw - (var(--gutter) * 2)));
   }
 }
 
@@ -140,14 +154,17 @@
   }
 
   .copy {
-    width: min(460px, calc(100vw - (var(--gutter) * 2)));
-    place-self: end start;
-    padding-bottom: 0;
-    padding-left: 0;
+    width: min(100%, calc(100vw - (var(--gutter) * 2)));
   }
 
   .brand {
-    font-size: clamp(2.8rem, 9.8vw, 4.2rem);
+    flex-wrap: wrap;
+    gap: 12px 18px;
+    font-size: clamp(2rem, 7vw, 3rem);
+  }
+
+  .brandDash {
+    flex-basis: 84px;
   }
 
 }
@@ -164,12 +181,18 @@
   }
 
   .copy {
-    width: min(100%, 420px);
-    place-self: end start;
+    width: 100%;
   }
 
   .brand {
-    font-size: clamp(2.38rem, 11.2vw, 3.29rem);
+    gap: 10px 14px;
+    font-size: clamp(1.4rem, 7vw, 2rem);
+  }
+
+  .brandDash {
+    flex-basis: 52px;
+    min-width: 40px;
+    height: 1px;
   }
 
 }

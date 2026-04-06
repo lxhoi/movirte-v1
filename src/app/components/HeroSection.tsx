@@ -55,10 +55,13 @@ export default function HeroSection() {
       <div className={styles.overlay}>
         <div className={styles.copy}>
           <h1 className={styles.brand}>
-            Carrying
-            <br />
-            Heritage
-            <span className={styles.brandAccent}> Forward.</span>
+            <span className={styles.brandWord}>Carrying</span>
+            <span className={styles.brandDash} aria-hidden="true" />
+            <span className={styles.brandWord}>Heritage</span>
+            <span className={styles.brandDash} aria-hidden="true" />
+            <span className={styles.brandWord}>
+              <span className={styles.brandAccent}>Forward.</span>
+            </span>
           </h1>
         </div>
       </div>
