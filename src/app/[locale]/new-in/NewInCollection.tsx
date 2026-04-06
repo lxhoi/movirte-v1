@@ -3,6 +3,8 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import Image from "next/image";
 import type { CatalogProduct } from "@/app/components/catalogProducts";
+import { Link } from "@/i18n/navigation";
+import { getProductUrl } from "@/lib/utils";
 import styles from "./page.module.css";
 
 type SortKey =
@@ -372,30 +374,32 @@ export function NewInCollection({ products }: { products: CatalogProduct[] }) {
       <section className={styles.grid}>
         {paginatedProducts.map((product) => (
           <article key={product.id} className={styles.card}>
-            <div className={styles.imageWrap}>
-              <Image
-                src={product.image}
-                alt={product.title}
-                fill
-                sizes="(max-width: 480px) 100vw, (max-width: 768px) 50vw, (max-width: 1024px) 33vw, 25vw"
-                className={styles.image}
-              />
-            </div>
-
-            <div className={styles.details}>
-              <h2 className={styles.name}>{product.title}</h2>
-              <p className={styles.price}>{product.price}</p>
-            </div>
-
-            <div className={styles.swatches} aria-hidden="true">
-              {product.colors.map((color) => (
-                <span
-                  key={`${product.id}-${color}`}
-                  className={styles.swatch}
-                  style={{ backgroundColor: color }}
+            <Link href={getProductUrl(product.handle)} className={styles.cardLink}>
+              <div className={styles.imageWrap}>
+                <Image
+                  src={product.image}
+                  alt={product.title}
+                  fill
+                  sizes="(max-width: 480px) 100vw, (max-width: 768px) 50vw, (max-width: 1024px) 33vw, 25vw"
+                  className={styles.image}
                 />
-              ))}
-            </div>
+              </div>
+
+              <div className={styles.details}>
+                <h2 className={styles.name}>{product.title}</h2>
+                <p className={styles.price}>{product.price}</p>
+              </div>
+
+              <div className={styles.swatches} aria-hidden="true">
+                {product.colors.map((color) => (
+                  <span
+                    key={`${product.id}-${color}`}
+                    className={styles.swatch}
+                    style={{ backgroundColor: color }}
+                  />
+                ))}
+              </div>
+            </Link>
           </article>
         ))}
       </section>

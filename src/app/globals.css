@@ -1,60 +1,79 @@
 /* ============================================================
    MOVIRTE — Global Design System
-   Black/white luxury aesthetic inspired by Azat Mard
+   Derived from the published brand guidelines and design system
    ============================================================ */
 
 /* ----- Design Tokens ----- */
 :root {
-  /* Colors */
-  --color-black: #000000;
-  --color-white: #ffffff;
-  --color-bg: #ffffff;
-  --color-fg: #111111;
-  --color-surface: #f8f6f2;
-  --color-surface-strong: #efebe3;
-  --color-panel: rgba(255, 255, 255, 0.82);
-  --color-panel-dark: rgba(17, 17, 17, 0.92);
-  --color-gray-50: #fafafa;
-  --color-gray-100: #f5f5f5;
-  --color-gray-200: #e5e5e5;
-  --color-gray-300: #d4d4d4;
-  --color-gray-400: #a3a3a3;
-  --color-gray-500: #737373;
-  --color-gray-600: #525252;
-  --color-gray-700: #404040;
-  --color-gray-800: #262626;
-  --color-gray-900: #171717;
-  --color-accent: #8b7355;
-  --color-accent-dark: #5f4d37;
-  --color-accent-light: #b09a7a;
-  --color-border: rgba(17, 17, 17, 0.12);
-  --color-border-strong: rgba(17, 17, 17, 0.24);
-  --color-selection-bg: rgba(139, 115, 85, 0.18);
+  /* Brand Palette */
+  --movirte-cream: #f5ede0;
+  --movirte-warm-beige: #e8ddd2;
+  --movirte-rich-brown: #6b3a2a;
+  --movirte-deep-brown: #3b1f10;
+  --movirte-black: #000000;
+  --movirte-neutral-900: #171717;
+  --movirte-neutral-700: #404040;
+  --movirte-neutral-500: #737373;
+  --movirte-neutral-300: #d4d4d4;
+  --movirte-neutral-100: #f5f5f5;
+  --movirte-white: #ffffff;
+  --movirte-success: #4a7c59;
+  --movirte-warning: #b8860b;
+  --movirte-error: #8b2020;
+  --movirte-info: #2c5f7a;
+
+  /* Aliases */
+  --color-black: var(--movirte-black);
+  --color-white: var(--movirte-white);
+  --color-bg: var(--movirte-neutral-100);
+  --color-fg: var(--movirte-neutral-900);
+  --color-surface: var(--movirte-cream);
+  --color-surface-strong: var(--movirte-warm-beige);
+  --color-panel: rgba(255, 255, 255, 0.78);
+  --color-panel-dark: rgba(23, 23, 23, 0.92);
+  --color-gray-50: #faf9f7;
+  --color-gray-100: var(--movirte-neutral-100);
+  --color-gray-200: #ebe7e2;
+  --color-gray-300: var(--movirte-neutral-300);
+  --color-gray-400: #a8a19a;
+  --color-gray-500: var(--movirte-neutral-500);
+  --color-gray-600: #57514a;
+  --color-gray-700: var(--movirte-neutral-700);
+  --color-gray-800: #2f2924;
+  --color-gray-900: var(--movirte-neutral-900);
+  --color-accent: var(--movirte-rich-brown);
+  --color-accent-dark: var(--movirte-deep-brown);
+  --color-accent-light: var(--movirte-warm-beige);
+  --color-border: rgba(23, 23, 23, 0.12);
+  --color-border-strong: rgba(23, 23, 23, 0.24);
+  --color-selection-bg: rgba(107, 58, 42, 0.16);
   --color-selection-fg: var(--color-black);
-  --color-error: #c0392b;
-  --color-success: #27ae60;
+  --color-error: var(--movirte-error);
+  --color-success: var(--movirte-success);
+  --color-warning: var(--movirte-warning);
+  --color-info: var(--movirte-info);
 
   /* Typography */
   --font-body: var(--font-inter), "Inter", -apple-system, BlinkMacSystemFont,
     "Segoe UI", Roboto, sans-serif;
-  --font-heading: var(--font-playfair), "Playfair Display", Georgia,
+  --font-heading: var(--font-cormorant), "Cormorant Garamond", Georgia,
     "Times New Roman", serif;
 
-  --text-xs: 0.6875rem;      /* 11px */
-  --text-sm: 0.75rem;        /* 12px */
-  --text-base: 0.875rem;     /* 14px */
-  --text-md: 1rem;           /* 16px */
-  --text-lg: 1.125rem;       /* 18px */
-  --text-xl: 1.25rem;        /* 20px */
-  --text-2xl: 1.5rem;        /* 24px */
-  --text-3xl: 2rem;          /* 32px */
-  --text-4xl: 2.5rem;        /* 40px */
-  --text-5xl: 3.5rem;        /* 56px */
+  --text-xs: 0.75rem;        /* 12px */
+  --text-sm: 0.875rem;       /* 14px */
+  --text-base: 1rem;         /* 16px */
+  --text-md: 1.125rem;       /* 18px */
+  --text-lg: 1.25rem;        /* 20px */
+  --text-xl: 1.5rem;         /* 24px */
+  --text-2xl: 2.25rem;       /* 36px */
+  --text-3xl: 3rem;          /* 48px */
+  --text-4xl: 3.75rem;       /* 60px */
+  --text-5xl: 4.5rem;        /* 72px */
   --text-6xl: 5rem;          /* 80px */
-  --text-hero: clamp(3rem, 10vw, 8rem);
-  --text-display: clamp(4rem, 12vw, 9rem);
+  --text-hero: clamp(3.6rem, 7vw, 6rem);
+  --text-display: clamp(4rem, 8vw, 7rem);
 
-  --leading-tight: 1.1;
+  --leading-tight: 1.02;
   --leading-snug: 1.3;
   --leading-normal: 1.6;
   --leading-relaxed: 1.8;
@@ -62,10 +81,10 @@
 
   --tracking-tight: -0.01em;
   --tracking-normal: 0;
-  --tracking-wide: 0.05em;
-  --tracking-wider: 0.1em;
-  --tracking-widest: 0.2em;
-  --tracking-ultra: 0.3em;
+  --tracking-wide: 0.08em;
+  --tracking-wider: 0.12em;
+  --tracking-widest: 0.15em;
+  --tracking-ultra: 0.2em;
 
   /* Spacing (4px base) */
   --space-1: 4px;
@@ -84,29 +103,29 @@
   --space-40: 160px;
 
   /* Layout */
-  --container-max: 1400px;
+  --container-max: 1440px;
   --container-narrow: 960px;
   --container-text: 640px;
-  --container-wide: 1600px;
-  --gutter: 32px;
-  --header-height: 88px;
+  --container-wide: 1440px;
+  --gutter: 24px;
+  --header-height: 84px;
 
   /* Borders & Radii */
   --radius-sm: 2px;
-  --radius-md: 4px;
-  --radius-lg: 8px;
-  --radius-xl: 16px;
-  --radius-2xl: 24px;
+  --radius-md: 6px;
+  --radius-lg: 10px;
+  --radius-xl: 18px;
+  --radius-2xl: 28px;
   --radius-full: 9999px;
   --border-thin: 1px solid var(--color-border);
   --border-strong: 1px solid var(--color-border-strong);
   --border-dark: 1px solid rgba(255, 255, 255, 0.12);
 
   /* Shadows */
-  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.06);
-  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.08);
-  --shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.12);
-  --shadow-xl: 0 20px 60px rgba(0, 0, 0, 0.14);
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.08);
+  --shadow-md: 0 10px 24px rgba(59, 31, 16, 0.08);
+  --shadow-lg: 0 24px 60px rgba(59, 31, 16, 0.1);
+  --shadow-xl: 0 32px 90px rgba(59, 31, 16, 0.14);
 
   /* Z-index layers */
   --z-base: 1;
@@ -170,6 +189,16 @@ body {
   text-rendering: optimizeLegibility;
 }
 
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  background:
+    radial-gradient(circle at top center, rgba(245, 237, 224, 0.7), transparent 38%),
+    linear-gradient(180deg, #faf8f5 0%, var(--color-bg) 28%, var(--color-bg) 100%);
+}
+
 ::selection {
   background: var(--color-selection-bg);
   color: var(--color-selection-fg);
@@ -184,7 +213,8 @@ a {
   text-decoration: none;
   transition:
     color var(--duration-fast) var(--ease-out),
-    opacity var(--duration-fast) var(--ease-out);
+    opacity var(--duration-fast) var(--ease-out),
+    border-color var(--duration-fast) var(--ease-out);
 }
 
 button {
@@ -193,6 +223,11 @@ button {
   cursor: pointer;
   border: none;
   background: none;
+}
+
+:focus-visible {
+  outline: 2px solid rgba(107, 58, 42, 0.22);
+  outline-offset: 3px;
 }
 
 img,
@@ -216,6 +251,40 @@ textarea,
 select {
   font: inherit;
   color: inherit;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: var(--font-heading);
+  font-weight: 500;
+  line-height: var(--leading-tight);
+  letter-spacing: var(--tracking-tight);
+}
+
+p,
+li,
+label,
+input,
+textarea,
+select,
+button {
+  font-family: var(--font-body);
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
 }
 
 h1, h2, h3, h4, h5, h6 {

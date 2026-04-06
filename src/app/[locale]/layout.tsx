@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { NextIntlClientProvider } from "next-intl";
 import { getMessages, setRequestLocale } from "next-intl/server";
 import { notFound } from "next/navigation";
-import { Inter, Playfair_Display } from "next/font/google";
+import { Cormorant_Garamond, Inter } from "next/font/google";
 import "../globals.css";
 import Footer from "../components/Footer";
 import AnnouncementBar from "../components/AnnouncementBar";
@@ -15,9 +15,11 @@ const inter = Inter({
   subsets: ["latin"],
 });
 
-const playfair = Playfair_Display({
-  variable: "--font-playfair",
+const cormorant = Cormorant_Garamond({
+  variable: "--font-cormorant",
   subsets: ["latin"],
+  weight: ["300", "400", "500", "600", "700"],
+  style: ["normal", "italic"],
 });
 
 export const metadata: Metadata = {
@@ -49,7 +51,7 @@ export default async function LocaleLayout({
 
   return (
     <NextIntlClientProvider locale={locale} messages={messages}>
-      <div className={`${inter.variable} ${playfair.variable}`}>
+      <div className={`${inter.variable} ${cormorant.variable}`}>
         <AnnouncementBar />
         <Header />
         <main>{children}</main>

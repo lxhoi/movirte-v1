@@ -124,6 +124,8 @@ export default function Header() {
   const toggleCart = useCartStore((state) => state.toggleCart);
   const closeCart = useCartStore((state) => state.closeCart);
   const isCartOpen = useCartStore((state) => state.isOpen);
+  const lastAddedLabel = useCartStore((state) => state.lastAddedLabel);
+  const lastAddedAt = useCartStore((state) => state.lastAddedAt);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [activeFlyout, setActiveFlyout] = useState<
@@ -135,6 +137,7 @@ export default function Header() {
   const [isPinned, setIsPinned] = useState(!isHomePage);
   const [useLightHeader, setUseLightHeader] = useState(false);
   const [selectedRegionCode, setSelectedRegionCode] = useState(DEFAULT_REGION.code);
+  const [showCartAdded, setShowCartAdded] = useState(false);
   const showLightHeader =
     useLightHeader || (isHomePage && (isHeaderHovered || activeFlyout !== null));
   const canShowClothingFlyout = !isHomePage || showLightHeader;
@@ -249,6 +252,20 @@ export default function Header() {
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
   }, [isLanguagePickerOpen]);
+
+  useEffect(() => {
+    if (!lastAddedAt) {
+      return;
+    }
+
+    setShowCartAdded(true);
+
+    const timeoutId = window.setTimeout(() => {
+      setShowCartAdded(false);
+    }, 1600);
+
+    return () => window.clearTimeout(timeoutId);
+  }, [lastAddedAt]);
 
   const handleLocaleChange = (nextLocale: string) => {
     router.replace(pathname, { locale: nextLocale });
@@ -592,6 +609,9 @@ export default function Header() {
             >
               <ShoppingBag size={18} strokeWidth={1.7} />
               <span className={styles.cartBadge}>{cartCount}</span>
+              {showCartAdded && lastAddedLabel ? (
+                <span className={styles.cartAddedBadge}>{lastAddedLabel}</span>
+              ) : null}
             </button>
           </div>
         </div>

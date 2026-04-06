@@ -4,6 +4,8 @@ import Image from "next/image";
 import { useRef, useState } from "react";
 import { ArrowLeft, ArrowRight } from "lucide-react";
 import { featuredProducts } from "./catalogProducts";
+import { Link } from "@/i18n/navigation";
+import { getProductUrl } from "@/lib/utils";
 import styles from "./ProductCarousel.module.css";
 
 export default function ProductCarousel() {
@@ -109,42 +111,44 @@ export default function ProductCarousel() {
             className={styles.card}
             data-product-card="true"
           >
-            <div className={styles.imageWrap}>
-              <Image
-                src={product.image}
-                alt={product.title}
-                fill
-                sizes="(max-width: 480px) 100vw, (max-width: 768px) 50vw, 25vw"
-                className={styles.image}
-              />
-              {product.secondaryImage ? (
+            <Link href={getProductUrl(product.handle)} className={styles.cardLink}>
+              <div className={styles.imageWrap}>
                 <Image
-                  src={product.secondaryImage}
-                  alt={`${product.title} alternate view`}
+                  src={product.image}
+                  alt={product.title}
                   fill
                   sizes="(max-width: 480px) 100vw, (max-width: 768px) 50vw, 25vw"
-                  className={`${styles.image} ${styles.secondaryImage}`}
+                  className={styles.image}
                 />
-              ) : null}
-            </div>
-
-            <div className={styles.meta}>
-              <div className={styles.titleRow}>
-                <h3 className={styles.title}>{product.title}</h3>
-                <p className={styles.price}>{product.price}</p>
-              </div>
-
-              <div className={styles.swatches} aria-label={`${product.title} color options`}>
-                {product.colors.map((color) => (
-                  <span
-                    key={color}
-                    className={styles.swatch}
-                    style={{ backgroundColor: color }}
-                    aria-hidden="true"
+                {product.secondaryImage ? (
+                  <Image
+                    src={product.secondaryImage}
+                    alt={`${product.title} alternate view`}
+                    fill
+                    sizes="(max-width: 480px) 100vw, (max-width: 768px) 50vw, 25vw"
+                    className={`${styles.image} ${styles.secondaryImage}`}
                   />
-                ))}
+                ) : null}
               </div>
-            </div>
+
+              <div className={styles.meta}>
+                <div className={styles.titleRow}>
+                  <h3 className={styles.title}>{product.title}</h3>
+                  <p className={styles.price}>{product.price}</p>
+                </div>
+
+                <div className={styles.swatches} aria-label={`${product.title} color options`}>
+                  {product.colors.map((color) => (
+                    <span
+                      key={color}
+                      className={styles.swatch}
+                      style={{ backgroundColor: color }}
+                      aria-hidden="true"
+                    />
+                  ))}
+                </div>
+              </div>
+            </Link>
           </article>
         ))}
       </div>
